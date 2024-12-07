@@ -150,7 +150,6 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                     value=0
                 )
                 but0 = gr.Button(value="Convert", variant="primary")
-            with gr.Row():
                 with gr.Column():
                     with gr.Tabs():
                         with gr.TabItem("Upload"):
