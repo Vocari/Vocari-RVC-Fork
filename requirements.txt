@@ -1,4 +1,4 @@
-tkinter
+tk
 pyngrok
 aria2
 joblib>=1.1.0
