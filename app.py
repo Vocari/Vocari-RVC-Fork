@@ -164,7 +164,7 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                                 repo_url = gr.Textbox(label="your url", pleacholder="user/repo")
                                 hf_token = gr.Textbox(label="your token", pleacholder="Hf_krkejd")
                             upload_modelst = gr.Button(value="Upload models", variant="primary") 
-                            upload_modelst.click(fn=upload_model inputs=[repo_url,voice_model,voice_index,hf_token], outputs=[hf_token])
+                            upload_modelst.click(fn=upload_model, inputs=[repo_url,voice_model,voice_index,hf_token], outputs=[hf_token])
                         
                     with gr.Row():
                         paths_for_files = lambda path:[os.path.abspath(os.path.join(path, f)) for f in os.listdir(path) if os.path.splitext(f)[1].lower() in ('.mp3', '.wav', '.flac', '.ogg')]
