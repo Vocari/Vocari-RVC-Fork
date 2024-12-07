@@ -262,9 +262,9 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                         inputs=[],
                         outputs = [input_audio0],   
                     )
-            with gr.Row():
-                f0_file = gr.File(label="F0 Path", visible=False)
-            vc_output2 = gr.Audio(label="Output")
+                with gr.Row():
+                    f0_file = gr.File(label="F0 Path", visible=False)
+                vc_output2 = gr.Audio(label="Output")
             with gr.Row():
                 vc_output1 = gr.Textbox(label="Information", placeholder="output here!",visible=True)
                 but0.click(
