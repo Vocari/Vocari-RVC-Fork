@@ -1,4 +1,5 @@
 tkinter
+pyngrok
 aria2
 joblib>=1.1.0
 numba==0.56.4
