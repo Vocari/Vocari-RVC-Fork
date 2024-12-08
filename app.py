@@ -269,9 +269,9 @@ with gr.Blocks(
                         f0method0 = gr.Radio(
                             label="Method",
                             choices=(
-                                ["pm", "harvest", "crepe", "rmvpe"]
+                                ["pm", "harvest", "crepe", "rmvpe", "fcpe"]
                                 if config.dml == False
-                                else ["pm", "harvest", "rmvpe"]
+                                else ["pm", "harvest", "rmvpe", "fcpe"]
                             ),
                             value="rmvpe",
                             interactive=True,
