@@ -139,22 +139,6 @@ class Pipeline(object):
             f0 = torchcrepe.filter.mean(f0, 3)
             f0[pd < 0.1] = 0
             f0 = f0[0].cpu().numpy()
-        elif method == "fcpe":
-            from infer.lib.fcpe import RMVPE
-
-            self.model_fcpe = FCPEF0Predictor(
-                os.path.join("assets", "fcpe", "fcpe.pt"),
-                f0_min=int(f0_min),
-                f0_max=int(f0_max),
-                dtype=torch.float32,
-                device=self.device,
-                sample_rate=self.sample_rate,
-                threshold=0.03,
-            )
-            f0 = self.model_fcpe.compute_f0(x, p_len=p_len)
-            del self.model_fcpe
-            gc.collect()
-            f0_computation_stack.append(f0)
         elif f0_method == "rmvpe":
             if not hasattr(self, "model_rmvpe"):
                 from infer.lib.rmvpe import RMVPE
