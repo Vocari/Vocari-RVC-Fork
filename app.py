@@ -137,7 +137,7 @@ def upload_model(repo_id, pth, index, token):  # Changed 'repo' to 'repo_id'
 
 with gr.Blocks(
     title="🔊 Vocari's RVC Fork",
-    theme=gr.themes.Soft(primary_hue="green", neutral_hue="zinc"),
+    theme=gr.themes.Base(primary_hue="sky", neutral_hue="zinc"),
 ) as app:
     with gr.Row():
         gr.Markdown("# Vocari's RVC Fork")
