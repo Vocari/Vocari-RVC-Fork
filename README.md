@@ -46,6 +46,15 @@ Before running the web UI, you need the following dependencies:
 
    The web UI will be accessible at `http://localhost:5000`.
 
+
+## use cli
+
+you can also use cli by
+
+```bash
+python tools/infer_cli.py -h
+```
+
 ## Usage
 
 1. Open a browser and go to `http://localhost:5000`.
@@ -53,10 +62,7 @@ Before running the web UI, you need the following dependencies:
 3. Choose the target voice model for conversion.
 4. Wait for the processing to complete, and download the converted file.
 
-## Configuration
 
-- `config.json` allows you to adjust server settings, model paths, and other parameters.
-  
 ## Troubleshooting
 
 - **Missing FFmpeg:** If you receive an error about missing FFmpeg, ensure it's installed and available in your system's PATH.
