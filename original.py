@@ -5,16 +5,15 @@ from dotenv import load_dotenv
 now_dir = os.getcwd()
 sys.path.append(now_dir)
 load_dotenv()
-from infer.modules.vc.modules import VC
-from infer.modules.uvr5.modules import uvr
-from infer.lib.train.process_ckpt import (
+from rvc.infer.modules.vc.modules import VC
+from rvc.infer.lib.train.process_ckpt import (
     change_info,
     extract_small_model,
     merge,
     show_info,
 )
-from i18n.i18n import I18nAuto
-from configs.config import Config
+from rvc.i18n.i18n import I18nAuto
+from rvc.configs.config import Config
 from sklearn.cluster import MiniBatchKMeans
 import torch, platform
 import numpy as np
@@ -152,10 +151,6 @@ def lookup_indices(index_root):
 
 lookup_indices(index_root)
 lookup_indices(outside_index_root)
-uvr5_names = []
-for name in os.listdir(weight_uvr5_root):
-    if name.endswith(".pth") or "onnx" in name:
-        uvr5_names.append(name.replace(".pth", ""))
 
 
 def change_choices():
