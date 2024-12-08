@@ -7,6 +7,8 @@ requests>=2.31.0,<2.32.0
 tqdm
 wget
 audio-separator[gpu]==0.24.1
+python-dontev
+
 
 # Audio processing
 ffmpeg-python>=0.2.0
@@ -20,6 +22,7 @@ stftpitchshift
 yt_dlp
 pytube 
 pydub
+parselmouth
 
 # Machine learning and deep learning
 omegaconf>=2.0.6; sys_platform == 'darwin' 
@@ -33,7 +36,8 @@ torchfcpe
 einops
 libf0
 transformers==4.44.2
-
+praat-parselmouth
+av
 
 
 # Visualization and UI
