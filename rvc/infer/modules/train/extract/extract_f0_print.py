@@ -11,7 +11,7 @@ import logging
 import numpy as np
 import pyworld
 
-from infer.lib.audio import load_audio
+from rvc.infer.lib.audio import load_audio
 
 logging.getLogger("numba").setLevel(logging.WARNING)
 from multiprocessing import Process
