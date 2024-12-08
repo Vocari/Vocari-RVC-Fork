@@ -24,8 +24,8 @@ Before running the web UI, you need the following dependencies:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Vocari/Retrieval-based-Voice-Conversion-WebUI.git
-   cd Retrieval-based-Voice-Conversion-WebUI
+   git clone https://github.com/Vocari/Vocari-RVC-Fork.git
+   cd Vocari-RVC-Fork
    ```
 
 2. Install the required Python packages:
