@@ -56,7 +56,9 @@ from rvc.infer.lib.train.data_utils import (
 
 if hps.version == "v1":
     from rvc.infer.lib.infer_pack.models import MultiPeriodDiscriminator
-    from rvc.infer.lib.infer_pack.models import SynthesizerTrnMs256NSFsid as RVC_Model_f0
+    from rvc.infer.lib.infer_pack.models import (
+        SynthesizerTrnMs256NSFsid as RVC_Model_f0,
+    )
     from rvc.infer.lib.infer_pack.models import (
         SynthesizerTrnMs256NSFsid_nono as RVC_Model_nof0,
     )

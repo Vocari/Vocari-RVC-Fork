@@ -209,7 +209,7 @@ with gr.Blocks(
                             )
                             with gr.Row():
                                 repo_url = gr.Textbox(
-                                    label="your url", 
+                                    label="your url",
                                 )
                                 hf_token = gr.Textbox(
                                     label="your token",
