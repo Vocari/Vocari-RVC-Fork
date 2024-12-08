@@ -45,8 +45,8 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
-from infer.lib.infer_pack import commons
-from infer.lib.train.data_utils import (
+from rvc.infer.lib.infer_pack import commons
+from rvc.infer.lib.train.data_utils import (
     DistributedBucketSampler,
     TextAudioCollate,
     TextAudioCollateMultiNSFsid,
@@ -55,13 +55,13 @@ from infer.lib.train.data_utils import (
 )
 
 if hps.version == "v1":
-    from infer.lib.infer_pack.models import MultiPeriodDiscriminator
-    from infer.lib.infer_pack.models import SynthesizerTrnMs256NSFsid as RVC_Model_f0
-    from infer.lib.infer_pack.models import (
+    from rvc.infer.lib.infer_pack.models import MultiPeriodDiscriminator
+    from rvc.infer.lib.infer_pack.models import SynthesizerTrnMs256NSFsid as RVC_Model_f0
+    from rvc.infer.lib.infer_pack.models import (
         SynthesizerTrnMs256NSFsid_nono as RVC_Model_nof0,
     )
 else:
-    from infer.lib.infer_pack.models import (
+    from rvc.infer.lib.infer_pack.models import (
         SynthesizerTrnMs768NSFsid as RVC_Model_f0,
         SynthesizerTrnMs768NSFsid_nono as RVC_Model_nof0,
         MultiPeriodDiscriminatorV2 as MultiPeriodDiscriminator,
@@ -73,8 +73,8 @@ from infer.lib.train.losses import (
     generator_loss,
     kl_loss,
 )
-from infer.lib.train.mel_processing import mel_spectrogram_torch, spec_to_mel_torch
-from infer.lib.train.process_ckpt import savee
+from rvc.infer.lib.train.mel_processing import mel_spectrogram_torch, spec_to_mel_torch
+from rvc.infer.lib.train.process_ckpt import savee
 
 global_step = 0
 
@@ -615,7 +615,7 @@ def train_and_evaluate(
             )
 
     if rank == 0:
-        logger.info("====> Epoch: {} {}".format(epoch, epoch_recorder.record()))
+        logger.info("ーーー＞ Epoch: {} {}".format(epoch, epoch_recorder.record()))
     if epoch >= hps.total_epoch and rank == 0:
         logger.info("Training is done. The program is closed.")
 
