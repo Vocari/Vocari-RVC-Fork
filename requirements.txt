@@ -13,7 +13,7 @@ fairseq
 yt_dlp
 pytube 
 pydub
-parselmouth
+praat-parselmouth
 ffmpeg-python>=0.2.0
 faiss-cpu==1.7.3
 librosa==0.9.2
