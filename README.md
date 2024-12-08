@@ -8,7 +8,7 @@ This repository provides a web-based interface for Vocari's fork of the Retrieva
 - **Web-based Interface:** Simple and intuitive UI to upload and convert voice samples.
 - **Retrieval-based Voice Conversion:** High-quality conversion between different speakers, retaining natural prosody and speech characteristics.
 - **Model Support:** Compatible with various pre-trained models.
-- **Easy Training Model:** easy options to trainibg models.
+- **Easy Training Model:** easy options to trainig models.
   
 ## Prerequisites
 
