@@ -6,7 +6,7 @@ numpy==1.23.5
 requests>=2.31.0,<2.32.0
 tqdm
 wget
-audio_separator[gpu]
+audio-separator[gpu]==0.24.1
 
 # Audio processing
 ffmpeg-python>=0.2.0
