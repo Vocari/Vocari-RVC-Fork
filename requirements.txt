@@ -34,7 +34,7 @@ praat-parselmouth
 av
 matplotlib==3.7.2
 tensorboard
-gradio==4.44.0
+gradio==3.49.0
 tk
 pyngrok
 certifi>=2023.07.22; sys_platform == 'darwin'  
