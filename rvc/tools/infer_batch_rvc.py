@@ -12,8 +12,8 @@ import tqdm as tq
 from dotenv import load_dotenv
 from scipy.io import wavfile
 
-from configs.config import Config
-from infer.modules.vc.modules import VC
+from rvc.configs.config import Config
+from rvc.infer.modules.vc.modules import VC
 
 
 def arg_parse() -> tuple:
