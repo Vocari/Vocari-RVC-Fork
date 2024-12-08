@@ -10,9 +10,9 @@ from torch.nn import AvgPool1d, Conv1d, Conv2d, ConvTranspose1d
 from torch.nn import functional as F
 from torch.nn.utils import remove_weight_norm, weight_norm
 
-from infer.lib.infer_pack import commons
-from infer.lib.infer_pack.commons import get_padding, init_weights
-from infer.lib.infer_pack.transforms import piecewise_rational_quadratic_transform
+from rvc.infer.lib.infer_pack import commons
+from rvc.infer.lib.infer_pack.commons import get_padding, init_weights
+from rvc.infer.lib.infer_pack.transforms import piecewise_rational_quadratic_transform
 
 LRELU_SLOPE = 0.1
 
