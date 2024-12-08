@@ -8,6 +8,8 @@ tqdm
 wget
 audio-separator[gpu]==0.24.1
 python-dontev
+pyworld
+fairseq
 
 
 # Audio processing
