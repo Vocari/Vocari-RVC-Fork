@@ -141,6 +141,7 @@ class Pipeline(object):
             f0 = f0[0].cpu().numpy()
         elif method == "fcpe":
             from infer.lib.fcpe import RMVPE
+
             self.model_fcpe = FCPEF0Predictor(
                 os.path.join("assets", "fcpe", "fcpe.pt"),
                 f0_min=int(f0_min),

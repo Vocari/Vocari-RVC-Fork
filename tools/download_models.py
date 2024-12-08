@@ -23,5 +23,5 @@ if __name__ == "__main__":
     dl_model(RVC_DOWNLOAD_LINK, "rmvpe.pt", BASE_DIR / "assets/rmvpe")
     print("Downloading fcpe.pt...")
     dl_model(RVC_DOWNLOAD_LINK, "fcpe.pt", BASE_DIR / "assets/fcpe")
-    
+
     print("All models downloaded!")

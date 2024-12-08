@@ -6,84 +6,93 @@ import shutil, time, torch, gc
 from mega import Mega
 from datetime import datetime
 import pandas as pd
-import os, sys, subprocess,  numpy as np
+import os, sys, subprocess, numpy as np
 from pydub import AudioSegment
 import huggingface_hub
 import zipfile
 import os
 
 
-        
-def show(path,ext,on_error=None):
+def show(path, ext, on_error=None):
     try:
         return list(filter(lambda x: x.endswith(ext), os.listdir(path)))
     except:
         return on_error
-    
+
+
 def run_subprocess(command):
     try:
         subprocess.run(command, check=True)
         return True, None
     except Exception as e:
         return False, e
-        
+
+
 def download_from_url(url=None, model=None):
     if not url:
         try:
-            url = model[f'{model}']
+            url = model[f"{model}"]
         except:
             gr.Warning("Failed")
-            return ''
-    if model == '':
+            return ""
+    if model == "":
         try:
-            model = url.split('/')[-1].split('?')[0]
+            model = url.split("/")[-1].split("?")[0]
         except:
-            gr.Warning('Please name the model')
+            gr.Warning("Please name the model")
             return
-    model = model.replace('.pth', '').replace('.index', '').replace('.zip', '')
-    url = url.replace('/blob/main/', '/resolve/main/').strip()
+    model = model.replace(".pth", "").replace(".index", "").replace(".zip", "")
+    url = url.replace("/blob/main/", "/resolve/main/").strip()
 
-    for directory in ["downloads", "unzips","zip"]:
-        #shutil.rmtree(directory, ignore_errors=True)
+    for directory in ["downloads", "unzips", "zip"]:
+        # shutil.rmtree(directory, ignore_errors=True)
         os.makedirs(directory, exist_ok=True)
 
     try:
-        if url.endswith('.pth'):
-            subprocess.run(["wget", url, "-O", f'assets/weights/{model}.pth'])
-        elif url.endswith('.index'):
-            os.makedirs(f'logs/{model}', exist_ok=True)
-            subprocess.run(["wget", url, "-O", f'logs/{model}/added_{model}.index'])
-        elif url.endswith('.zip'):
-            subprocess.run(["wget", url, "-O", f'downloads/{model}.zip'])
+        if url.endswith(".pth"):
+            subprocess.run(["wget", url, "-O", f"assets/weights/{model}.pth"])
+        elif url.endswith(".index"):
+            os.makedirs(f"logs/{model}", exist_ok=True)
+            subprocess.run(["wget", url, "-O", f"logs/{model}/added_{model}.index"])
+        elif url.endswith(".zip"):
+            subprocess.run(["wget", url, "-O", f"downloads/{model}.zip"])
         else:
             if "drive.google.com" in url:
-                url = url.split('/')[0]
-                subprocess.run(["gdown", url, "--fuzzy", "-O", f'downloads/{model}'])
+                url = url.split("/")[0]
+                subprocess.run(["gdown", url, "--fuzzy", "-O", f"downloads/{model}"])
             elif "mega.nz" in url:
-                Mega().download_url(url, 'downloads')
+                Mega().download_url(url, "downloads")
             else:
-                subprocess.run(["wget", url, "-O", f'downloads/{model}'])
+                subprocess.run(["wget", url, "-O", f"downloads/{model}"])
 
         downloaded_file = next((f for f in os.listdir("downloads")), None)
         if downloaded_file:
             if downloaded_file.endswith(".zip"):
-                shutil.unpack_archive(f'downloads/{downloaded_file}', "unzips", 'zip')
-                for root, _, files in os.walk('unzips'):
+                shutil.unpack_archive(f"downloads/{downloaded_file}", "unzips", "zip")
+                for root, _, files in os.walk("unzips"):
                     for file in files:
                         file_path = os.path.join(root, file)
                         if file.endswith(".index"):
-                            os.makedirs(f'logs/{model}', exist_ok=True)
-                            shutil.copy2(file_path, f'logs/{model}')
-                        elif file.endswith(".pth") and "G_" not in file and "D_" not in file:
-                            shutil.copy(file_path, f'assets/weights/{model}.pth')
+                            os.makedirs(f"logs/{model}", exist_ok=True)
+                            shutil.copy2(file_path, f"logs/{model}")
+                        elif (
+                            file.endswith(".pth")
+                            and "G_" not in file
+                            and "D_" not in file
+                        ):
+                            shutil.copy(file_path, f"assets/weights/{model}.pth")
             elif downloaded_file.endswith(".pth"):
-                shutil.copy(f'downloads/{downloaded_file}', f'assets/weights/{model}.pth')
+                shutil.copy(
+                    f"downloads/{downloaded_file}", f"assets/weights/{model}.pth"
+                )
             elif downloaded_file.endswith(".index"):
-                os.makedirs(f'logs/{model}', exist_ok=True)
-                shutil.copy(f'downloads/{downloaded_file}', f'logs/{model}/added_{model}.index')
+                os.makedirs(f"logs/{model}", exist_ok=True)
+                shutil.copy(
+                    f"downloads/{downloaded_file}", f"logs/{model}/added_{model}.index"
+                )
             else:
                 gr.Warning("Failed to download file")
-                return 'Failed'
+                return "Failed"
 
         gr.Info("Done")
     except Exception as e:
@@ -92,11 +101,10 @@ def download_from_url(url=None, model=None):
         shutil.rmtree("downloads", ignore_errors=True)
         shutil.rmtree("unzips", ignore_errors=True)
         shutil.rmtree("zip", ignore_errors=True)
-        return 'Done'
-        
+        return "Done"
 
 
-def upload_model(repo_id, pth, index, token): # Changed 'repo' to 'repo_id'
+def upload_model(repo_id, pth, index, token):  # Changed 'repo' to 'repo_id'
     """
     Upload a model to the Hugging Face Hub
 
@@ -110,8 +118,8 @@ def upload_model(repo_id, pth, index, token): # Changed 'repo' to 'repo_id'
         str, message indicating the success of the operation
     """
 
-    repo_name = repo_id.split('/')[1] # Changed 'repo' to 'repo_id'
-    with zipfile.ZipFile(f'{repo_name}.zip', 'w') as zipf:
+    repo_name = repo_id.split("/")[1]  # Changed 'repo' to 'repo_id'
+    with zipfile.ZipFile(f"{repo_name}.zip", "w") as zipf:
         zipf.write(pth, os.path.basename(pth))
         zipf.write(index, os.path.basename(index))
 
@@ -119,24 +127,43 @@ def upload_model(repo_id, pth, index, token): # Changed 'repo' to 'repo_id'
     huggingface_hub.HfApi().create_repo(repo_id=repo_id, token=token, exist_ok=True)
     huggingface_hub.HfApi().upload_file(
         path_or_fileobj=f'{repo_id.split("/")[1]}.zip',
-        path_in_repo=f'{repo_id.split("/")[1]}.zip', # Changed 'repo' to 'repo_id'
+        path_in_repo=f'{repo_id.split("/")[1]}.zip',  # Changed 'repo' to 'repo_id'
         repo_id=repo_id,
-        token=token
+        token=token,
     )
-    os.remove(f'{repo_id.split("/")[1]}.zip') # Changed 'repo' to 'repo_id'
+    os.remove(f'{repo_id.split("/")[1]}.zip')  # Changed 'repo' to 'repo_id'
     return "Model uploaded successfully"
 
 
-with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="green",neutral_hue="zinc")) as app:
+with gr.Blocks(
+    title="🔊 Vocari's RVC Fork",
+    theme=gr.themes.Soft(primary_hue="green", neutral_hue="zinc"),
+) as app:
     with gr.Row():
         gr.Markdown("# Vocari's RVC Fork")
     with gr.Tabs():
         with gr.TabItem("Inference"):
             with gr.Row():
                 with gr.Row():
-                    voice_model = gr.Dropdown(label="Model Voice", choices=sorted(names), value=lambda:sorted(names)[0] if len(sorted(names)) > 0 else '', interactive=True)
-                    file_index2 = gr.Dropdown(label="Change Index",choices=sorted(index_paths),interactive=True,value=sorted(index_paths)[0] if len(sorted(index_paths)) > 0 else '')                        
-            with gr.Row():                                               
+                    voice_model = gr.Dropdown(
+                        label="Model Voice",
+                        choices=sorted(names),
+                        value=lambda: (
+                            sorted(names)[0] if len(sorted(names)) > 0 else ""
+                        ),
+                        interactive=True,
+                    )
+                    file_index2 = gr.Dropdown(
+                        label="Change Index",
+                        choices=sorted(index_paths),
+                        interactive=True,
+                        value=(
+                            sorted(index_paths)[0]
+                            if len(sorted(index_paths)) > 0
+                            else ""
+                        ),
+                    )
+            with gr.Row():
                 refresh_button = gr.Button("Refresh", variant="primary")
                 spk_item = gr.Slider(
                     minimum=0,
@@ -147,62 +174,110 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                     visible=False,
                     interactive=True,
                 )
-                vc_transform0 = gr.Number(
-                    label="Pitch", 
-                    value=0
-                )
+                vc_transform0 = gr.Number(label="Pitch", value=0)
                 but0 = gr.Button(value="Convert", variant="primary")
                 with gr.Column():
                     with gr.Tabs():
                         with gr.TabItem("Upload"):
-                            dropbox = gr.File(label="Drop your audio here & hit the Reload button.")
+                            dropbox = gr.File(
+                                label="Drop your audio here & hit the Reload button."
+                            )
                         with gr.TabItem("Record"):
-                            record_button=gr.Audio(source="microphone", label="OR Record audio.", type="filepath")
-                                
+                            record_button = gr.Audio(
+                                source="microphone",
+                                label="OR Record audio.",
+                                type="filepath",
+                            )
+
                         with gr.TabItem("Upload models after Training"):
-                            voice_model1 = gr.Dropdown(label="Model Files", choices=sorted(names), value=lambda:sorted(names)[0] if len(sorted(names)) > 0 else '', interactive=True)
-                            voice_index = gr.Dropdown(label="Index Files",choices=sorted(index_paths),interactive=True,value=sorted(index_paths)[0] if len(sorted(index_paths)) > 0 else '')
+                            voice_model1 = gr.Dropdown(
+                                label="Model Files",
+                                choices=sorted(names),
+                                value=lambda: (
+                                    sorted(names)[0] if len(sorted(names)) > 0 else ""
+                                ),
+                                interactive=True,
+                            )
+                            voice_index = gr.Dropdown(
+                                label="Index Files",
+                                choices=sorted(index_paths),
+                                interactive=True,
+                                value=(
+                                    sorted(index_paths)[0]
+                                    if len(sorted(index_paths)) > 0
+                                    else ""
+                                ),
+                            )
                             with gr.Row():
-                                repo_url = gr.Textbox(label="your url", pleacholder="user/repo")
-                                hf_token = gr.Textbox(label="your token", pleacholder="Hf_krkejd")
-                            upload_modelst = gr.Button(value="Upload models", variant="primary") 
-                            upload_modelst.click(fn=upload_model, inputs=[repo_url,voice_model1,voice_index,hf_token], outputs=[hf_token])
-                        
+                                repo_url = gr.Textbox(
+                                    label="your url", pleacholder="user/repo"
+                                )
+                                hf_token = gr.Textbox(
+                                    label="your token", pleacholder="Hf_krkejd"
+                                )
+                            upload_modelst = gr.Button(
+                                value="Upload models", variant="primary"
+                            )
+                            upload_modelst.click(
+                                fn=upload_model,
+                                inputs=[repo_url, voice_model1, voice_index, hf_token],
+                                outputs=[hf_token],
+                            )
+
                     with gr.Row():
-                        paths_for_files = lambda path:[os.path.abspath(os.path.join(path, f)) for f in os.listdir(path) if os.path.splitext(f)[1].lower() in ('.mp3', '.wav', '.flac', '.ogg')]
+                        paths_for_files = lambda path: [
+                            os.path.abspath(os.path.join(path, f))
+                            for f in os.listdir(path)
+                            if os.path.splitext(f)[1].lower()
+                            in (".mp3", ".wav", ".flac", ".ogg")
+                        ]
                         input_audio0 = gr.Dropdown(
                             label="Input Path",
-                            value=paths_for_files('audios')[0] if len(paths_for_files('audios')) > 0 else '',
-                            choices=paths_for_files('audios'), # Only show absolute paths for audio files ending in .mp3, .wav, .flac or .ogg
-                            allow_custom_value=True
+                            value=(
+                                paths_for_files("audios")[0]
+                                if len(paths_for_files("audios")) > 0
+                                else ""
+                            ),
+                            choices=paths_for_files(
+                                "audios"
+                            ),  # Only show absolute paths for audio files ending in .mp3, .wav, .flac or .ogg
+                            allow_custom_value=True,
                         )
                     with gr.Row():
                         audio_player = gr.Audio(label="Input")
                         input_audio0.change(
                             inputs=[input_audio0],
                             outputs=[audio_player],
-                            fn=lambda path: {"value":path,"__type__":"update"} if os.path.exists(path) else None
+                            fn=lambda path: (
+                                {"value": path, "__type__": "update"}
+                                if os.path.exists(path)
+                                else None
+                            ),
                         )
                         record_button.stop_recording(
-                            fn=lambda audio:audio, #TODO save wav lambda
-                            inputs=[record_button], 
-                            outputs=[input_audio0])
+                            fn=lambda audio: audio,  # TODO save wav lambda
+                            inputs=[record_button],
+                            outputs=[input_audio0],
+                        )
                         dropbox.upload(
-                            fn=lambda audio:audio.name,
-                            inputs=[dropbox], 
-                            outputs=[input_audio0])
-                        
-                with gr.Column():    
+                            fn=lambda audio: audio.name,
+                            inputs=[dropbox],
+                            outputs=[input_audio0],
+                        )
+
+                with gr.Column():
                     with gr.Accordion("General Settings", open=False):
                         f0method0 = gr.Radio(
                             label="Method",
-                            choices=["pm", "harvest", "crepe", "rmvpe"]
-                            if config.dml == False
-                            else ["pm", "harvest", "rmvpe"],
+                            choices=(
+                                ["pm", "harvest", "crepe", "rmvpe"]
+                                if config.dml == False
+                                else ["pm", "harvest", "rmvpe"]
+                            ),
                             value="rmvpe",
                             interactive=True,
                         )
-                        
+
                         index_rate1 = gr.Slider(
                             minimum=0,
                             maximum=1,
@@ -225,7 +300,7 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                             value=0,
                             step=1,
                             interactive=True,
-                            visible=False
+                            visible=False,
                         )
                         rms_mix_rate0 = gr.Slider(
                             minimum=0,
@@ -242,11 +317,12 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                             step=0.01,
                             interactive=True,
                         )
-                        if voice_model != None: vc.get_vc(voice_model.value,protect0,protect0)
+                        if voice_model != None:
+                            vc.get_vc(voice_model.value, protect0, protect0)
                     file_index1 = gr.Textbox(
                         label="Index Path",
                         interactive=True,
-                        visible=False#Not used here
+                        visible=False,  # Not used here
                     )
                     refresh_button.click(
                         fn=change_choices,
@@ -255,24 +331,36 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                         api_name="infer_refresh",
                     )
                     refresh_button.click(
-                        fn=lambda:{"choices":paths_for_files('audios'),"__type__":"update"}, #TODO check if properly returns a sorted list of audio files in the 'audios' folder that have the extensions '.wav', '.mp3', '.ogg', or '.flac'
+                        fn=lambda: {
+                            "choices": paths_for_files("audios"),
+                            "__type__": "update",
+                        },  # TODO check if properly returns a sorted list of audio files in the 'audios' folder that have the extensions '.wav', '.mp3', '.ogg', or '.flac'
                         inputs=[],
-                        outputs = [input_audio0],   
+                        outputs=[input_audio0],
                     )
                     refresh_button.click(
-                        fn=lambda:{"value":paths_for_files('audios')[0],"__type__":"update"} if len(paths_for_files('audios')) > 0 else {"value":"","__type__":"update"}, #TODO check if properly returns a sorted list of audio files in the 'audios' folder that have the extensions '.wav', '.mp3', '.ogg', or '.flac'
+                        fn=lambda: (
+                            {
+                                "value": paths_for_files("audios")[0],
+                                "__type__": "update",
+                            }
+                            if len(paths_for_files("audios")) > 0
+                            else {"value": "", "__type__": "update"}
+                        ),  # TODO check if properly returns a sorted list of audio files in the 'audios' folder that have the extensions '.wav', '.mp3', '.ogg', or '.flac'
                         inputs=[],
-                        outputs = [input_audio0],   
+                        outputs=[input_audio0],
                     )
                     with gr.Row():
                         f0_file = gr.File(label="F0 Path", visible=False)
 
                 with gr.Row():
                     vc_output2 = gr.Audio(label="Output")
-            
-                    vc_output1 = gr.Textbox(label="Information", placeholder="output here!",visible=True)
+
+                    vc_output1 = gr.Textbox(
+                        label="Information", placeholder="output here!", visible=True
+                    )
                 but0.click(
-                    vc.vc_single,  
+                    vc.vc_single,
                     [
                         spk_item,
                         input_audio0,
@@ -289,7 +377,7 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                     ],
                     [vc_output1, vc_output2],
                     api_name="infer_convert",
-                )  
+                )
                 voice_model.change(
                     fn=vc.get_vc,
                     inputs=[voice_model, protect0, protect0],
@@ -297,14 +385,20 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                     api_name="infer_change_voice",
                 )
         with gr.TabItem("Download RVC Models"):
-                url = gr.Textbox(label="url")
-                model_name = gr.Textbox(label="Model name")
-                download_md = gr.Button("Download")
-                download_md.click(fn=download_from_url, inputs=[url,model_name], outputs=model_name)
+            url = gr.Textbox(label="url")
+            model_name = gr.Textbox(label="Model name")
+            download_md = gr.Button("Download")
+            download_md.click(
+                fn=download_from_url, inputs=[url, model_name], outputs=model_name
+            )
         with gr.TabItem("Train"):
             with gr.Row():
                 with gr.Column():
-                    training_name = gr.Textbox(label="Name your model:", value="My-Voice",placeholder="My-Voice")
+                    training_name = gr.Textbox(
+                        label="Name your model:",
+                        value="My-Voice",
+                        placeholder="My-Voice",
+                    )
                     np7 = gr.Slider(
                         minimum=0,
                         maximum=config.n_cpu,
@@ -318,14 +412,14 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                         choices=["40k", "32k"],
                         value="32k",
                         interactive=True,
-                        visible=True
+                        visible=True,
                     )
                     if_f0_3 = gr.Radio(
                         label="Will your model be used for singing? If not, you can ignore this.",
                         choices=[True, False],
                         value=True,
                         interactive=True,
-                        visible=False
+                        visible=False,
                     )
                     version19 = gr.Radio(
                         label="Version",
@@ -335,12 +429,12 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                         visible=False,
                     )
                     dataset_folder = gr.Textbox(
-                        label="dataset folder:", value='dataset'
+                        label="dataset folder:", value="dataset"
                     )
-                    
+
                     but1 = gr.Button("1. Process:", variant="primary")
-                    info1 = gr.Textbox(label="Information:", value="",visible=True)
-                    
+                    info1 = gr.Textbox(label="Information:", value="", visible=True)
+
                     gpus6 = gr.Textbox(
                         label="Enter the GPU numbers to use separated by -, (e.g. 0-1-2):",
                         value=gpus,
@@ -357,14 +451,14 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                         label="Speaker ID:",
                         value=0,
                         interactive=True,
-                        visible=False
+                        visible=False,
                     )
                     but1.click(
                         preprocess_dataset,
                         [dataset_folder, training_name, sr2, np7],
                         [info1],
                         api_name="train_preprocess",
-                    ) 
+                    )
                 with gr.Column():
                     f0method8 = gr.Radio(
                         label="F0 extraction method:",
@@ -416,7 +510,7 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                             label="GPUs separated by -, (e.g. 0-1-2)",
                             value="0",
                             interactive=True,
-                            visible=True
+                            visible=True,
                         )
                         save_epoch10 = gr.Slider(
                             minimum=1,
@@ -439,7 +533,7 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                             choices=["yes", "no"],
                             value="yes",
                             interactive=True,
-                            visible=False
+                            visible=False,
                         )
                         if_cache_gpu17 = gr.Radio(
                             label="If your dataset is UNDER 10 minutes, cache it to train faster",
@@ -454,30 +548,50 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                             interactive=True,
                         )
                         with gr.Accordion(label="Change pretrains", open=False):
-                            pretrained = lambda sr, letter: [os.path.abspath(os.path.join('assets/pretrained_v2', file)) for file in os.listdir('assets/pretrained_v2') if file.endswith('.pth') and sr in file and letter in file]
+                            pretrained = lambda sr, letter: [
+                                os.path.abspath(
+                                    os.path.join("assets/pretrained_v2", file)
+                                )
+                                for file in os.listdir("assets/pretrained_v2")
+                                if file.endswith(".pth")
+                                and sr in file
+                                and letter in file
+                            ]
                             pretrained_G14 = gr.Dropdown(
                                 label="pretrained G",
                                 # Get a list of all pretrained G model files in assets/pretrained_v2 that end with .pth
-                                choices = pretrained(sr2.value, 'G'),
-                                value=pretrained(sr2.value, 'G')[0] if len(pretrained(sr2.value, 'G')) > 0 else '',
+                                choices=pretrained(sr2.value, "G"),
+                                value=(
+                                    pretrained(sr2.value, "G")[0]
+                                    if len(pretrained(sr2.value, "G")) > 0
+                                    else ""
+                                ),
                                 interactive=True,
-                                visible=True
+                                visible=True,
                             )
                             pretrained_D15 = gr.Dropdown(
                                 label="pretrained D",
-                                choices = pretrained(sr2.value, 'D'),
-                                value= pretrained(sr2.value, 'D')[0] if len(pretrained(sr2.value, 'G')) > 0 else '',
+                                choices=pretrained(sr2.value, "D"),
+                                value=(
+                                    pretrained(sr2.value, "D")[0]
+                                    if len(pretrained(sr2.value, "G")) > 0
+                                    else ""
+                                ),
                                 visible=True,
-                                interactive=True
+                                interactive=True,
                             )
                     with gr.Row():
-                        download_model = gr.Button('5.Download Model')
+                        download_model = gr.Button("5.Download Model")
                     with gr.Row():
-                        model_files = gr.Files(label='Your Model and Index file can be downloaded here:')
+                        model_files = gr.Files(
+                            label="Your Model and Index file can be downloaded here:"
+                        )
                         download_model.click(
-                            fn=lambda name: os.listdir(f'assets/weights/{name}') + glob.glob(f'logs/{name.split(".")[0]}/added_*.index'),
-                            inputs=[training_name], 
-                            outputs=[model_files, info3])
+                            fn=lambda name: os.listdir(f"assets/weights/{name}")
+                            + glob.glob(f'logs/{name.split(".")[0]}/added_*.index'),
+                            inputs=[training_name],
+                            outputs=[model_files, info3],
+                        )
                     with gr.Row():
                         sr2.change(
                             change_sr2,
@@ -495,7 +609,9 @@ with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="
                             [f0method8, pretrained_G14, pretrained_D15],
                         )
                     with gr.Row():
-                        but5 = gr.Button("1 Click Training", variant="primary", visible=False)
+                        but5 = gr.Button(
+                            "1 Click Training", variant="primary", visible=False
+                        )
                         but3.click(
                             click_train,
                             [
