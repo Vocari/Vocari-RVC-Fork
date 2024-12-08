@@ -127,9 +127,9 @@ def upload_model(repo_id, pth, index, token): # Changed 'repo' to 'repo_id'
     return "Model uploaded successfully"
 
 
-with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="green",neutral_hue="zinc")) as app:
+with gr.Blocks(title="🔊 Vocari's RVC Fork",theme=gr.themes.Soft(primary_hue="green",neutral_hue="zinc")) as app:
     with gr.Row():
-        gr.Markdown("# Neo RVC WebUI")
+        gr.Markdown("# Vocari's RVC Fork")
     with gr.Tabs():
         with gr.TabItem("Inference"):
             with gr.Row():
