@@ -1,5 +1,5 @@
 
-# Retrieval-based Voice Conversion WebUI (Vocari's RVC Fork)
+# Vocari's RVC Fork
 
 This repository provides a web-based interface for Vocari's fork of the Retrieval-based Voice Conversion (RVC) model. It allows users to convert voices between different speakers using state-of-the-art retrieval-based voice conversion techniques.
 
@@ -86,12 +86,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 
 
-
-## Tanks for Thier contributor (Rvc)
-<a href="https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI/graphs/contributors" target="_blank">
-  <img src="https://contrib.rocks/image?repo=RVC-Project/Retrieval-based-Voice-Conversion-WebUI" />
-</a>
----
 
 <a href="https://github.com/Vocari/Retrieval-based-Voice-Conversion-WebUI/graphs/contributors" target="_blank">
   <img src="https://contrib.rocks/image?repo=Vocari/Retrieval-based-Voice-Conversion-WebUI" />
