@@ -4,8 +4,7 @@ import requests
 
 RVC_DOWNLOAD_LINK = "https://huggingface.co/Vocari/VoiceConversion/resolve/main/"
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = os.getcwd() 
 
 def dl_model(link, model_name, dir_name):
     with requests.get(f"{link}{model_name}") as r:
