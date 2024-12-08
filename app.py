@@ -184,7 +184,6 @@ with gr.Blocks(
                             )
                         with gr.TabItem("Record"):
                             record_button = gr.Audio(
-                                source="microphone",
                                 label="OR Record audio.",
                                 type="filepath",
                             )
