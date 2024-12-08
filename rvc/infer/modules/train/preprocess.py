@@ -20,8 +20,8 @@ import librosa
 import numpy as np
 from scipy.io import wavfile
 
-from infer.lib.audio import load_audio
-from infer.lib.slicer2 import Slicer
+from rvc.infer.lib.audio import load_audio
+from rvc.infer.lib.slicer2 import Slicer
 
 f = open("%s/preprocess.log" % exp_dir, "a+")
 
