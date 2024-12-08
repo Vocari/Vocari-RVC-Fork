@@ -15,7 +15,6 @@ pytube
 pydub
 ffmpeg-python>=0.2.0
 faiss-cpu==1.7.3
-scipy==1.11.1
 soundfile==0.12.1
 noisereduce
 pedalboard
