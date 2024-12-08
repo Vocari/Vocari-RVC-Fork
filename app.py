@@ -209,10 +209,10 @@ with gr.Blocks(
                             )
                             with gr.Row():
                                 repo_url = gr.Textbox(
-                                    label="your url", pleacholder="user/repo"
+                                    label="your url", 
                                 )
                                 hf_token = gr.Textbox(
-                                    label="your token", pleacholder="Hf_krkejd"
+                                    label="your token",
                                 )
                             upload_modelst = gr.Button(
                                 value="Upload models", variant="primary"
