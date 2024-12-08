@@ -17,7 +17,7 @@ jobs:
         if: github.event.pull_request.base.ref != 'dev'
         uses: superbrothers/close-pull-request@v3
         with:
-          # Optional. Post a issue comment just before closing a pull request.
+          # Optional. Post an issue comment just before closing a pull request.
           comment: "Invalid PR to `non-dev` branch `${{ github.event.pull_request.base.ref }}`."
 
   pull_format:
@@ -35,14 +35,42 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.x"  # Adjust to your preferred version, or use a matrix for multiple versions.
 
       - name: Install Black
         run: pip install "black[jupyter]"
 
       - name: Run Black
-        # run: black $(git ls-files '*.py')
         run: black .
+
+  # Dependabot job (dependency update configuration)
+  dependabot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Dependabot
+        run: |
+          echo "version: 2" > .github/dependabot.yml
+          echo "updates:" >> .github/dependabot.yml
+          echo "  - package-ecosystem: \"pip\"" >> .github/dependabot.yml
+          echo "    directory: \"/\"" >> .github/dependabot.yml
+          echo "    schedule:" >> .github/dependabot.yml
+          echo "      interval: \"daily\"" >> .github/dependabot.yml
+          echo "    commit-message:" >> .github/dependabot.yml
+          echo "      prefix: \"deps\"" >> .github/dependabot.yml
+          echo "    versioning-strategy: \"increase\"" >> .github/dependabot.yml
+          echo "  - package-ecosystem: \"npm\"" >> .github/dependabot.yml
+          echo "    directory: \"/\"" >> .github/dependabot.yml
+          echo "    schedule:" >> .github/dependabot.yml
+          echo "      interval: \"daily\"" >> .github/dependabot.yml
+          echo "    commit-message:" >> .github/dependabot.yml
+          echo "      prefix: \"deps\"" >> .github/dependabot.yml
+          echo "    versioning-strategy: \"increase\"" >> .github/dependabot.yml
