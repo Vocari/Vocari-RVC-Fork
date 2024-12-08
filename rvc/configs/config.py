@@ -68,8 +68,8 @@ class Config:
         for config_file in version_config_list:
             p = f"configs/inuse/{config_file}"
             if not os.path.exists(p):
-                shutil.copy(f"configs/{config_file}", p)
-            with open(f"configs/inuse/{config_file}", "r") as f:
+                shutil.copy(f"rvc/configs/{config_file}", p)
+            with open(f"rvc/configs/inuse/{config_file}", "r") as f:
                 d[config_file] = json.load(f)
         return d
 
@@ -128,9 +128,9 @@ class Config:
     def use_fp32_config(self):
         for config_file in version_config_list:
             self.json_config[config_file]["train"]["fp16_run"] = False
-            with open(f"configs/inuse/{config_file}", "r") as f:
+            with open(f"rvc/configs/inuse/{config_file}", "r") as f:
                 strr = f.read().replace("true", "false")
-            with open(f"configs/inuse/{config_file}", "w") as f:
+            with open(f"rvc/configs/inuse/{config_file}", "w") as f:
                 f.write(strr)
             logger.info("overwrite " + config_file)
         self.preprocess_per = 3.0
@@ -166,12 +166,12 @@ class Config:
             if self.gpu_mem <= 4:
                 self.preprocess_per = 3.0
         elif self.has_mps():
-            logger.info("No supported Nvidia GPU found")
+            logger.info(" | No supported Nvidia GPU found |")
             self.device = self.instead = "mps"
             self.is_half = False
             self.use_fp32_config()
         else:
-            logger.info("No supported Nvidia GPU found")
+            logger.info("| No supported Nvidia GPU found |")
             self.device = self.instead = "cpu"
             self.is_half = False
             self.use_fp32_config()
