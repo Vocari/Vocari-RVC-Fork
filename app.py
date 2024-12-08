@@ -132,8 +132,10 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
         gr.Markdown("# Neo RVC WebUI")
     with gr.Tabs():
         with gr.TabItem("Inference"):
-                voice_model = gr.Dropdown(label="Model Voice", choices=sorted(names), value=lambda:sorted(names)[0] if len(sorted(names)) > 0 else '', interactive=True)
-                file_index2 = gr.Dropdown(label="Change Index",choices=sorted(index_paths),interactive=True,value=sorted(index_paths)[0] if len(sorted(index_paths)) > 0 else '')                        
+            with gr.Row():
+                with gr.Row():
+                    voice_model = gr.Dropdown(label="Model Voice", choices=sorted(names), value=lambda:sorted(names)[0] if len(sorted(names)) > 0 else '', interactive=True)
+                    file_index2 = gr.Dropdown(label="Change Index",choices=sorted(index_paths),interactive=True,value=sorted(index_paths)[0] if len(sorted(index_paths)) > 0 else '')                        
                                                                  
                 refresh_button = gr.Button("Refresh", variant="primary")
                 spk_item = gr.Slider(
@@ -264,9 +266,11 @@ with gr.Blocks(title="🔊 Neo RVC WebUI",theme=gr.themes.Soft(primary_hue="gree
                     )
                     with gr.Row():
                         f0_file = gr.File(label="F0 Path", visible=False)
-                vc_output2 = gr.Audio(label="Output")
+
+                with gr.Row():
+                    vc_output2 = gr.Audio(label="Output")
             
-                vc_output1 = gr.Textbox(label="Information", placeholder="output here!",visible=True)
+                    vc_output1 = gr.Textbox(label="Information", placeholder="output here!",visible=True)
                 but0.click(
                     vc.vc_single,  
                     [
