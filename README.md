@@ -52,7 +52,7 @@ Before running the web UI, you need the following dependencies:
 you can also use cli by
 
 ```bash
-python tools/infer_cli.py -h
+python rvc/tools/infer_cli.py -h
 ```
 
 ## Usage
