@@ -19,9 +19,9 @@ from torch.nn import AvgPool1d, Conv1d, Conv2d, ConvTranspose1d
 from torch.nn import functional as F
 from torch.nn.utils import remove_weight_norm, spectral_norm, weight_norm
 
-from infer.lib.infer_pack import commons, modules
-import infer.lib.infer_pack.attentions_onnx as attentions
-from infer.lib.infer_pack.commons import get_padding, init_weights
+from rvc.infer.lib.infer_pack import commons, modules
+import rvc.infer.lib.infer_pack.attentions_onnx as attentions
+from rvc.infer.lib.infer_pack.commons import get_padding, init_weights
 
 
 class TextEncoder256(nn.Module):
