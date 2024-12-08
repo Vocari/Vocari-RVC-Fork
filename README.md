@@ -87,6 +87,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 
 
-<a href="https://github.com/Vocari/Retrieval-based-Voice-Conversion-WebUI/graphs/contributors" target="_blank">
-  <img src="https://contrib.rocks/image?repo=Vocari/Retrieval-based-Voice-Conversion-WebUI" />
+<a href="https://github.com/Vocari/Vocari-RVC-Fork/graphs/contributors" target="_blank">
+  <img src="https://contrib.rocks/image?repo=Vocari-RVC-Fork" />
 </a>
