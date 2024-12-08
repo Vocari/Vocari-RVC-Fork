@@ -79,9 +79,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Vocari for creating the Retrieval-based Voice Conversion model.
-- The developers of the original RVC repository.
-- Contributors and the open-source community for their support.
+- Vocari fork for creating the Retrieval-based Voice Conversion model.
+- Thanks the developers of the original RVC repository.
+
 
 
 
