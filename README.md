@@ -92,7 +92,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 
 
-
 <a href="https://github.com/Vocari/Vocari-RVC-Fork/graphs/contributors" target="_blank">
-  <img src="https://contrib.rocks/image?repo=Vocari-RVC-Fork" />
+  <img src="https://contrib.rocks/image?repo=Vocari/Vocari-RVC-Fork" alt="Contributors" />
 </a>
