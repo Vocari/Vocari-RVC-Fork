@@ -66,7 +66,7 @@ class Config:
     def load_config_json() -> dict:
         d = {}
         for config_file in version_config_list:
-            p = f"configs/inuse/{config_file}"
+            p = f"rvc/configs/inuse/{config_file}"
             if not os.path.exists(p):
                 shutil.copy(f"rvc/configs/{config_file}", p)
             with open(f"rvc/configs/inuse/{config_file}", "r") as f:
