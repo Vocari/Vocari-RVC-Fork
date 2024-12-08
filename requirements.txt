@@ -10,7 +10,10 @@ audio_separator[gpu]==0.24.1
 python-dontev
 pyworld
 fairseq
-
+yt_dlp
+pytube 
+pydub
+parselmouth
 
 # Audio processing
 ffmpeg-python>=0.2.0
@@ -21,10 +24,7 @@ soundfile==0.12.1
 noisereduce
 pedalboard
 stftpitchshift
-yt_dlp
-pytube 
-pydub
-parselmouth
+
 
 # Machine learning and deep learning
 omegaconf>=2.0.6; sys_platform == 'darwin' 
