@@ -9,7 +9,7 @@ sys.path.append(os.path.join(now_dir))
 
 import datetime
 
-from infer.lib.train import utils
+from rvc.infer.lib.train import utils
 
 hps = utils.get_hparams()
 os.environ["CUDA_VISIBLE_DEVICES"] = hps.gpus.replace("-", ",")
