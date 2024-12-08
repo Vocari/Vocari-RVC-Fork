@@ -31,7 +31,7 @@ Before running the web UI, you need the following dependencies:
 2. Install the required Python packages:
 
    ```bash
-   pip install -r --force-reinstall requirements.txt
+   pip install -r requirements.txt
    ```
 
 3. Download the pre-trained models (if not already included):
