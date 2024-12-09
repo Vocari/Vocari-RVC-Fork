@@ -5,6 +5,7 @@ RVC_DOWNLOAD_LINK = "https://huggingface.co/Vocari/VoiceConversion/resolve/main/
 BASE_DIR = Path.cwd()  # Using Path for better path management
 CHUNK_SIZE = 8192  # Configurable chunk size for downloads
 
+
 def dl_model(link: str, model_name: str, dir_name: Path) -> None:
     """
     Downloads a file from the given link and saves it in the specified directory.
@@ -28,6 +29,7 @@ def dl_model(link: str, model_name: str, dir_name: Path) -> None:
         print(f"Downloaded {model_name} to {file_path}")
     except requests.RequestException as e:
         print(f"Error downloading {model_name}: {e}")
+
 
 if __name__ == "__main__":
     models = [

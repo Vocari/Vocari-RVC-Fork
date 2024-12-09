@@ -1,14 +1,11 @@
 import os
 from audio_separator.separator import Separator
-import subprocess   
+import subprocess
 import re
 
 
+def audio_separator(url, output):
 
-
-def audio_separator(url,output):
-   
-    
     # Extract video ID from the YouTube URL
     try:
         # Using regex for more robust video ID extraction
@@ -23,9 +20,11 @@ def audio_separator(url,output):
         command = [
             "yt-dlp",
             "-x",  # Extract audio
-            "--audio-format", "wav",  # Specify WAV format
-            "--output", f"{video_id}/{video_id}.wav",  # Set output filename
-            url  # YouTube URL
+            "--audio-format",
+            "wav",  # Specify WAV format
+            "--output",
+            f"{video_id}/{video_id}.wav",  # Set output filename
+            url,  # YouTube URL
         ]
 
         try:
@@ -44,14 +43,15 @@ def audio_separator(url,output):
 
     input_vocals = f"{video_id}/{video_id}.wav"
     # Vocals and Instrumental
-    vocals = os.path.join(output, 'Vocals.wav')
-    instrumental = os.path.join(output, 'Instrumental.wav')
+    vocals = os.path.join(output, "Vocals.wav")
+    instrumental = os.path.join(output, "Instrumental.wav")
 
     # Splitting a track into Vocal and Instrumental
-    separator.load_model('model_bs_roformer_ep_368_sdr_12.9628.ckpt')
+    separator.load_model("model_bs_roformer_ep_368_sdr_12.9628.ckpt")
     voc_inst = separator.separate(input_vocals)
-    os.rename(os.path.join(output, voc_inst[0]), instrumental)  # Rename file to “Instrumental.wav”
+    os.rename(
+        os.path.join(output, voc_inst[0]), instrumental
+    )  # Rename file to “Instrumental.wav”
     os.rename(os.path.join(output, voc_inst[1]), vocals)  # Rename file to “Vocals.wav”
 
     return instrumental, vocals
-

@@ -4,18 +4,19 @@ import subprocess
 import shutil
 import argparse
 
+
 def download_from_url(url=None, model=None):
     if not url:
         print("Error: URL is required.")
         return ""
-    
+
     if not model:
         try:
             model = url.split("/")[-1].split("?")[0]
         except:
             print("Error: Failed to derive model name from URL.")
             return
-    
+
     model = model.replace(".pth", "").replace(".index", "").replace(".zip", "")
     url = url.replace("/blob/main/", "/resolve/main/").strip()
 
@@ -77,9 +78,12 @@ def download_from_url(url=None, model=None):
         shutil.rmtree("zip", ignore_errors=True)
         return "Done"
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Download files from a given URL.")
-    parser.add_argument("--url", type=str, required=True, help="URL to download the file from.")
+    parser.add_argument(
+        "--url", type=str, required=True, help="URL to download the file from."
+    )
     parser.add_argument("--model", type=str, required=False, help="Name of the model.")
 
     args = parser.parse_args()
