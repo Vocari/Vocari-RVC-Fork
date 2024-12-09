@@ -87,14 +87,19 @@ python infer_cli.py -h
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
-
-- Vocari fork for creating the Retrieval-based Voice Conversion model.
-- Thanks the developers of the original RVC repository.
 
 
 
 
+## Credits
+
+- Retrieval based Voice Conversion - RVC Project
+-  IAHispano - Applio
+- Easygui - Rejekts
+
+
+
+----------------------------------------------------------------------------------------
 
 <a href="https://github.com/Vocari/Vocari-RVC-Fork/graphs/contributors" target="_blank">
   <img src="https://contrib.rocks/image?repo=Vocari/Vocari-RVC-Fork" alt="Contributors" />
