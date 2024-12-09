@@ -97,7 +97,7 @@ class RVC:
 
             if last_rvc is None:
                 models, _, _ = fairseq.checkpoint_utils.load_model_ensemble_and_task(
-                    ["assets/hubert/hubert_base.pt"],
+                    ["rvc/models/hubert/hubert_base.pt"],
                     suffix="",
                 )
                 hubert_model = models[0]
@@ -316,7 +316,7 @@ class RVC:
 
             printt("Loading rmvpe model")
             self.model_rmvpe = RMVPE(
-                "assets/rmvpe/rmvpe.pt",
+                "rvc/models/rmvpe/rmvpe.pt",
                 is_half=self.is_half,
                 device=self.device,
                 use_jit=self.config.use_jit,
