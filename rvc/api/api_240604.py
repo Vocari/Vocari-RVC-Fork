@@ -123,7 +123,7 @@ class AudioAPI:
                     data["sg_output_device"] = output_devices[sd.default.device[1]]
         except Exception as e:
             logger.error(f"Failed to load configuration: {e}")
-            with open("configs/config.json", "w", encoding="utf-8") as j:
+            with open("rvc/configs/config.json", "w", encoding="utf-8") as j:
                 data = {
                     "pth_path": "",
                     "index_path": "",
@@ -599,9 +599,9 @@ if __name__ == "__main__":
     os.environ["OMP_NUM_THREADS"] = "4"
     if sys.platform == "darwin":
         os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
-    from tools.torchgate import TorchGate
-    import tools.rvc_for_realtime as rvc_for_realtime
-    from configs.config import Config
+    from rvc.tools.torchgate import TorchGate
+    import rvc.tools.rvc_for_realtime as rvc_for_realtime
+    from rvc.configs.config import Config
 
     audio_api.config = Config()
     audio_api.initialize_queues()
