@@ -17,7 +17,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchcrepe
 
-from infer.lib.infer_pack.models import (
+from rvc.infer.lib.infer_pack.models import (
     SynthesizerTrnMs256NSFsid,
     SynthesizerTrnMs256NSFsid_nono,
     SynthesizerTrnMs768NSFsid,
@@ -28,7 +28,7 @@ now_dir = os.getcwd()
 sys.path.append(now_dir)
 from multiprocessing import Manager as M
 
-from configs.config import Config
+from rvc.configs.config import Config
 
 # config = Config()
 
