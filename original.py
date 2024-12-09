@@ -208,8 +208,8 @@ def if_done_multi(done, ps):
 
 def preprocess_dataset(trainset_dir, exp_dir, sr, n_p):
     sr = sr_dict[sr]
-    os.makedirs("%s/logs/%s" % (now_dir, exp_dir), exist_ok=True)
-    f = open("%s/logs/%s/preprocess.log" % (now_dir, exp_dir), "w")
+    os.makedirs("%s/rvc/logs/%s" % (now_dir, exp_dir), exist_ok=True)
+    f = open("%s/rvc/logs/%s/preprocess.log" % (now_dir, exp_dir), "w")
     f.close()
     cmd = (
         '"%s" rvc/infer/modules/train/preprocess.py "%s" %s %s "%s/logs/%s" %s %.1f'
@@ -236,12 +236,12 @@ def preprocess_dataset(trainset_dir, exp_dir, sr, n_p):
         ),
     ).start()
     while 1:
-        with open("%s/logs/%s/preprocess.log" % (now_dir, exp_dir), "r") as f:
+        with open("%s/rvc/logs/%s/preprocess.log" % (now_dir, exp_dir), "r") as f:
             yield (f.read())
         sleep(1)
         if done[0]:
             break
-    with open("%s/logs/%s/preprocess.log" % (now_dir, exp_dir), "r") as f:
+    with open("%s/rvc/logs/%s/preprocess.log" % (now_dir, exp_dir), "r") as f:
         log = f.read()
     logger.info(log)
     yield log
@@ -250,8 +250,8 @@ def preprocess_dataset(trainset_dir, exp_dir, sr, n_p):
 # but2.click(extract_f0,[gpus6,np7,f0method8,if_f0_3,trainset_dir4],[info2])
 def extract_f0_feature(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvpe):
     gpus = gpus.split("-")
-    os.makedirs("%s/logs/%s" % (now_dir, exp_dir), exist_ok=True)
-    f = open("%s/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "w")
+    os.makedirs("%s/rvc/logs/%s" % (now_dir, exp_dir), exist_ok=True)
+    f = open("%s/rvc/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "w")
     f.close()
     if if_f0:
         if f0method != "rmvpe_gpu":
@@ -327,13 +327,13 @@ def extract_f0_feature(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvp
                 done = [True]
         while 1:
             with open(
-                "%s/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r"
+                "%s/rvc/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r"
             ) as f:
                 yield (f.read())
             sleep(1)
             if done[0]:
                 break
-        with open("%s/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r") as f:
+        with open("%s/rvc/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r") as f:
             log = f.read()
         logger.info(log)
         yield log
@@ -377,12 +377,12 @@ def extract_f0_feature(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvp
         ),
     ).start()
     while 1:
-        with open("%s/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r") as f:
+        with open("%s/rvc/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r") as f:
             yield (f.read())
         sleep(1)
         if done[0]:
             break
-    with open("%s/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r") as f:
+    with open("%s/rvc/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r") as f:
         log = f.read()
     logger.info(log)
     yield log
@@ -404,7 +404,7 @@ def get_pretrained_models(path_str, f0_str, sr2):
         )
     if not if_pretrained_discriminator_exist:
         logger.warning(
-            "assets/pretrained%s/%sD%s.pth not exist, will not use pretrained model",
+            "rvc/models/pretrained%s/%sD%s.pth not exist, will not use pretrained model",
             path_str,
             f0_str,
             sr2,
@@ -472,7 +472,7 @@ def click_train(
     version19,
 ):
     # 生成filelist
-    exp_dir = "%s/logs/%s" % (now_dir, exp_dir1)
+    exp_dir = "%s/rvc/logs/%s" % (now_dir, exp_dir1)
     os.makedirs(exp_dir, exist_ok=True)
     gt_wavs_dir = "%s/0_gt_wavs" % (exp_dir)
     feature_dir = (
@@ -525,13 +525,13 @@ def click_train(
     if if_f0_3:
         for _ in range(2):
             opt.append(
-                "%s/logs/mute/0_gt_wavs/mute%s.wav|%s/logs/mute/3_feature%s/mute.npy|%s/logs/mute/2a_f0/mute.wav.npy|%s/logs/mute/2b-f0nsf/mute.wav.npy|%s"
+                "%s/rvc/logs/mute/0_gt_wavs/mute%s.wav|%s/logs/mute/3_feature%s/mute.npy|%s/logs/mute/2a_f0/mute.wav.npy|%s/logs/mute/2b-f0nsf/mute.wav.npy|%s"
                 % (now_dir, sr2, now_dir, fea_dim, now_dir, now_dir, spk_id5)
             )
     else:
         for _ in range(2):
             opt.append(
-                "%s/logs/mute/0_gt_wavs/mute%s.wav|%s/logs/mute/3_feature%s/mute.npy|%s"
+                "%s/rvc/logs/mute/0_gt_wavs/mute%s.wav|%s/logs/mute/3_feature%s/mute.npy|%s"
                 % (now_dir, sr2, now_dir, fea_dim, spk_id5)
             )
     shuffle(opt)
