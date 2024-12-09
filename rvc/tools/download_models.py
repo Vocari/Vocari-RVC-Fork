@@ -33,9 +33,9 @@ def dl_model(link: str, model_name: str, dir_name: Path) -> None:
 
 if __name__ == "__main__":
     models = [
-        ("hubert_base.pt", BASE_DIR / "assets/hubert"),
-        ("rmvpe.pt", BASE_DIR / "assets/rmvpe"),
-        ("fcpe.pt", BASE_DIR / "assets/fcpe"),
+        ("hubert_base.pt", BASE_DIR / "rvc/models/hubert"),
+        ("rmvpe.pt", BASE_DIR / "rvc/models/rmvpe"),
+        ("fcpe.pt", BASE_DIR / "rvc/models/fcpe"),
     ]
 
     for model_name, model_dir in models:
