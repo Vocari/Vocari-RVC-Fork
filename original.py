@@ -215,15 +215,18 @@ def preprocess_dataset(trainset_dir, exp_dir, sr, n_p):
     os.makedirs("%s/logs/%s" % (now_dir, exp_dir), exist_ok=True)
     f = open("%s/logs/%s/preprocess.log" % (now_dir, exp_dir), "w")
     f.close()
-    cmd = '"%s" rvc/infer/modules/train/preprocess.py "%s" %s %s "%s/logs/%s" %s %.1f' % (
-        config.python_cmd,
-        trainset_dir,
-        sr,
-        n_p,
-        now_dir,
-        exp_dir,
-        config.noparallel,
-        config.preprocess_per,
+    cmd = (
+        '"%s" rvc/infer/modules/train/preprocess.py "%s" %s %s "%s/logs/%s" %s %.1f'
+        % (
+            config.python_cmd,
+            trainset_dir,
+            sr,
+            n_p,
+            now_dir,
+            exp_dir,
+            config.noparallel,
+            config.preprocess_per,
+        )
     )
     logger.info("Execute: " + cmd)
     # , stdin=PIPE, stdout=PIPE,stderr=PIPE,cwd=now_dir

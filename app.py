@@ -20,7 +20,6 @@ pretraineds_custom_path = os.path.join(
 )
 
 
-
 pretraineds_custom_path_relative = os.path.relpath(pretraineds_custom_path, now_dir)
 
 
@@ -41,7 +40,7 @@ def refresh_custom_pretraineds():
     return (
         {"choices": sorted(get_pretrained_list("G")), "__type__": "update"},
         {"choices": sorted(get_pretrained_list("D")), "__type__": "update"},
-                          )
+    )
 
 
 def show(path, ext, on_error=None):
@@ -578,7 +577,7 @@ with gr.Blocks(
                             interactive=True,
                         )
                         with gr.Accordion(label="Change pretrains", open=False):
-                            
+
                             pretrained_G14 = gr.Dropdown(
                                 label=("Custom Pretrained G"),
                                 info=(
