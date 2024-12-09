@@ -626,9 +626,7 @@ with gr.Blocks(
                             [f0method8, pretrained_G14, pretrained_D15],
                         )
                     with gr.Row():
-                        but5 = gr.Button(
-                            "1 Click Training", variant="primary", visible=False
-                        )
+                       
                         but3.click(
                             click_train,
                             [
@@ -651,31 +649,6 @@ with gr.Blocks(
                             api_name="train_start",
                         )
                         but4.click(train_index, [training_name, version19], info3)
-                        but5.click(
-                            train1key,
-                            [
-                                training_name,
-                                sr2,
-                                if_f0_3,
-                                dataset_folder,
-                                spk_id5,
-                                np7,
-                                f0method8,
-                                save_epoch10,
-                                total_epoch11,
-                                batch_size12,
-                                if_save_latest13,
-                                pretrained_G14,
-                                pretrained_D15,
-                                gpus16,
-                                if_cache_gpu17,
-                                if_save_every_weights18,
-                                version19,
-                                gpus_rmvpe,
-                            ],
-                            info3,
-                            api_name="train_start_all",
-                        )
 
     if config.iscolab:
         app.queue()
