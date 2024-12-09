@@ -23,7 +23,7 @@ from scipy.io import wavfile
 from rvc.infer.lib.audio import load_audio
 from rvc.infer.lib.slicer2 import Slicer
 
-f = open("rvc/%s/preprocess.log" % exp_dir, "a+")
+f = open(f"rvc/logs/{exp_dir}/preprocess.log" % exp_dir, "a+")
 
 
 def println(strr):
