@@ -194,7 +194,7 @@ with gr.Blocks(
                             else ""
                         ),
                     )
-                with gr.Row():      
+                with gr.Row():
                     spk_item = gr.Slider(
                         minimum=0,
                         maximum=2333,
@@ -205,7 +205,7 @@ with gr.Blocks(
                         interactive=True,
                     )
                     vc_transform0 = gr.Number(label="Pitch", value=0)
-                with gr.Row():      
+                with gr.Row():
                     refresh_button = gr.Button("Refresh", variant="primary")
                     but0 = gr.Button(value="Convert", variant="primary")
             with gr.Row():
@@ -297,7 +297,6 @@ with gr.Blocks(
                             outputs=[input_audio0],
                         )
 
-    
                     with gr.Accordion("General Settings", open=False):
                         f0method0 = gr.Radio(
                             label="Method",
@@ -387,8 +386,12 @@ with gr.Blocks(
 
                     with gr.Row():
                         vc_output2 = gr.Audio(label="Output")
-                    with gr.Row():      
-                        vc_output1 = gr.Textbox(label="Information", placeholder="output here!", visible=True)
+                    with gr.Row():
+                        vc_output1 = gr.Textbox(
+                            label="Information",
+                            placeholder="output here!",
+                            visible=True,
+                        )
                 but0.click(
                     vc.vc_single,
                     [
@@ -462,7 +465,6 @@ with gr.Blocks(
                         label="dataset folder:", value="dataset"
                     )
 
-        
                     gpus6 = gr.Textbox(
                         label="Enter the GPU numbers to use separated by -, (e.g. 0-1-2):",
                         value=gpus,
@@ -481,7 +483,7 @@ with gr.Blocks(
                         interactive=True,
                         visible=False,
                     )
-                    
+
                 with gr.Column():
                     f0method8 = gr.Radio(
                         label="F0 extraction method:",
@@ -495,14 +497,13 @@ with gr.Blocks(
                         interactive=True,
                         visible=F0GPUVisible,
                     )
-                    
-            
+
                     f0method8.change(
                         fn=change_f0_method,
                         inputs=[f0method8],
                         outputs=[gpus_rmvpe],
                     )
-                    
+
                 with gr.Column():
                     total_epoch11 = gr.Slider(
                         minimum=2,
@@ -512,7 +513,7 @@ with gr.Blocks(
                         value=150,
                         interactive=True,
                     )
-                    
+
                     with gr.Accordion(label="General Settings", open=False):
                         gpus16 = gr.Textbox(
                             label="GPUs separated by -, (e.g. 0-1-2)",
@@ -611,7 +612,6 @@ with gr.Blocks(
                         )
                     with gr.Row():
 
-
                         but1.click(
                             fn=preprocess_dataset,
                             inputs=[dataset_folder, training_name, sr2, np7],
@@ -623,7 +623,8 @@ with gr.Blocks(
                             inputs=[
                                 gpus6,
                                 np7,
-                                f0method8,if_f0_3,
+                                f0method8,
+                                if_f0_3,
                                 training_name,
                                 version19,
                                 gpus_rmvpe,
@@ -652,7 +653,11 @@ with gr.Blocks(
                             outputs=[info3],
                             api_name="train_start",
                         )
-                        but4.click(fn=train_index, inputs=[training_name, version19], outputs=[info3])
+                        but4.click(
+                            fn=train_index,
+                            inputs=[training_name, version19],
+                            outputs=[info3],
+                        )
 
     if config.iscolab:
         app.queue()
