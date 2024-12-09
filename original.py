@@ -39,11 +39,8 @@ logger = logging.getLogger(__name__)
 
 tmp = os.path.join(now_dir, "TEMP")
 shutil.rmtree(tmp, ignore_errors=True)
-shutil.rmtree("%s/runtime/Lib/site-packages/infer_pack" % (now_dir), ignore_errors=True)
-shutil.rmtree("%s/runtime/Lib/site-packages/uvr5_pack" % (now_dir), ignore_errors=True)
+shutil.rmtree("%s/runtime/Lib/site-packages/infer_pack" % (now_dir), ignore_errors=True
 os.makedirs(tmp, exist_ok=True)
-os.makedirs(os.path.join(now_dir, "logs"), exist_ok=True)
-os.makedirs(os.path.join(now_dir, "assets/weights"), exist_ok=True)
 os.environ["TEMP"] = tmp
 warnings.filterwarnings("ignore")
 torch.manual_seed(114514)
@@ -63,7 +60,6 @@ if config.dml == True:
     fairseq.modules.grad_multiply.GradMultiply.forward = forward_dml
 i18n = I18nAuto()
 logger.info(i18n)
-# 判断是否有能用来训练和加速推理的N卡
 ngpu = torch.cuda.device_count()
 gpu_infos = []
 mem = []
@@ -114,7 +110,7 @@ if if_gpu_ok and len(gpu_infos) > 0:
     gpu_info = "\n".join(gpu_infos)
     default_batch_size = min(mem) // 2
 else:
-    gpu_info = i18n("很遗憾您这没有能用的显卡来支持您训练")
+    gpu_info = ("Unfortunately, you do not have a working graphics card to support your training.")
     default_batch_size = 1
 gpus = "-".join([i[0] for i in gpu_infos])
 
@@ -231,7 +227,6 @@ def preprocess_dataset(trainset_dir, exp_dir, sr, n_p):
     logger.info("Execute: " + cmd)
     # , stdin=PIPE, stdout=PIPE,stderr=PIPE,cwd=now_dir
     p = Popen(cmd, shell=True)
-    # 煞笔gr, popen read都非得全跑完了再一次性读取, 不用gr就正常读一句输出一句;只能额外弄出一个文本流定时读
     done = [False]
     threading.Thread(
         target=if_done,
@@ -395,14 +390,14 @@ def extract_f0_feature(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvp
 
 def get_pretrained_models(path_str, f0_str, sr2):
     if_pretrained_generator_exist = os.access(
-        "assets/pretrained%s/%sG%s.pth" % (path_str, f0_str, sr2), os.F_OK
+        "rvc/models/pretrained%s/%sG%s.pth" % (path_str, f0_str, sr2), os.F_OK
     )
     if_pretrained_discriminator_exist = os.access(
-        "assets/pretrained%s/%sD%s.pth" % (path_str, f0_str, sr2), os.F_OK
+        "rvc/models/pretrained%s/%sD%s.pth" % (path_str, f0_str, sr2), os.F_OK
     )
     if not if_pretrained_generator_exist:
         logger.warning(
-            "assets/pretrained%s/%sG%s.pth not exist, will not use pretrained model",
+            "rvc/models/pretrained%s/%sG%s.pth not exist, will not use pretrained model",
             path_str,
             f0_str,
             sr2,
@@ -416,12 +411,12 @@ def get_pretrained_models(path_str, f0_str, sr2):
         )
     return (
         (
-            "assets/pretrained%s/%sG%s.pth" % (path_str, f0_str, sr2)
+            "rvc/models/pretrained%s/%sG%s.pth" % (path_str, f0_str, sr2)
             if if_pretrained_generator_exist
             else ""
         ),
         (
-            "assets/pretrained%s/%sD%s.pth" % (path_str, f0_str, sr2)
+            "rvc/models/pretrained%s/%sD%s.pth" % (path_str, f0_str, sr2)
             if if_pretrained_discriminator_exist
             else ""
         ),
@@ -543,8 +538,7 @@ def click_train(
     with open("%s/filelist.txt" % exp_dir, "w") as f:
         f.write("\n".join(opt))
     logger.debug("Write filelist done")
-    # 生成config#无需生成config
-    # cmd = python_cmd + " train_nsf_sim_cache_sid_load_pretrain.py -e mi-test -sr 40k -f0 1 -bs 4 -g 0 -te 10 -se 5 -pg pretrained/f0G40k.pth -pd pretrained/f0D40k.pth -l 1 -c 0"
+  
     logger.info("Use gpus: %s", str(gpus16))
     if pretrained_G14 == "":
         logger.info("No pretrained Generator")
@@ -607,7 +601,7 @@ def click_train(
     logger.info("Execute: " + cmd)
     p = Popen(cmd, shell=True, cwd=now_dir)
     p.wait()
-    return "训练结束, 您可查看控制台训练日志或实验文件夹下的train.log"
+    return "After the training is completed, you can view the console training log or train.log under the experiment folder"
 
 
 # but4.click(train_index, [exp_dir1], info3)
@@ -621,10 +615,10 @@ def train_index(exp_dir1, version19):
         else "%s/3_feature768" % (exp_dir)
     )
     if not os.path.exists(feature_dir):
-        return "请先进行特征提取!"
+        return "Plz perform feature extraction first!"
     listdir_res = list(os.listdir(feature_dir))
     if len(listdir_res) == 0:
-        return "请先进行特征提取！"
+        return "Plz perform feature extraction first!"
     infos = []
     npys = []
     for name in sorted(listdir_res):
@@ -682,7 +676,7 @@ def train_index(exp_dir1, version19):
         % (exp_dir, n_ivf, index_ivf.nprobe, exp_dir1, version19),
     )
     infos.append(
-        "成功构建索引 added_IVF%s_Flat_nprobe_%s_%s_%s.index"
+        "Index built  added_IVF%s_Flat_nprobe_%s_%s_%s.index successfully"
         % (n_ivf, index_ivf.nprobe, exp_dir1, version19)
     )
     try:
@@ -700,83 +694,14 @@ def train_index(exp_dir1, version19):
                 version19,
             ),
         )
-        infos.append("链接索引到外部-%s" % (outside_index_root))
+        infos.append("Link index to external-%s" % (outside_index_root))
     except:
-        infos.append("链接索引到外部-%s失败" % (outside_index_root))
+        infos.append("Link index to external - %s failed" % (outside_index_root))
 
-    # faiss.write_index(index, '%s/added_IVF%s_Flat_FastScan_%s.index'%(exp_dir,n_ivf,version19))
-    # infos.append("成功构建索引，added_IVF%s_Flat_FastScan_%s.index"%(n_ivf,version19))
     yield "\n".join(infos)
 
 
-# but5.click(train1key, [exp_dir1, sr2, if_f0_3, trainset_dir4, spk_id5, gpus6, np7, f0method8, save_epoch10, total_epoch11, batch_size12, if_save_latest13, pretrained_G14, pretrained_D15, gpus16, if_cache_gpu17], info3)
-def train1key(
-    exp_dir1,
-    sr2,
-    if_f0_3,
-    trainset_dir4,
-    spk_id5,
-    np7,
-    f0method8,
-    save_epoch10,
-    total_epoch11,
-    batch_size12,
-    if_save_latest13,
-    pretrained_G14,
-    pretrained_D15,
-    gpus16,
-    if_cache_gpu17,
-    if_save_every_weights18,
-    version19,
-    gpus_rmvpe,
-):
-    infos = []
 
-    def get_info_str(strr):
-        infos.append(strr)
-        return "\n".join(infos)
-
-    # step1:处理数据
-    yield get_info_str(i18n("step1:正在处理数据"))
-    [get_info_str(_) for _ in preprocess_dataset(trainset_dir4, exp_dir1, sr2, np7)]
-
-    # step2a:提取音高
-    yield get_info_str(i18n("step2:正在提取音高&正在提取特征"))
-    [
-        get_info_str(_)
-        for _ in extract_f0_feature(
-            gpus16, np7, f0method8, if_f0_3, exp_dir1, version19, gpus_rmvpe
-        )
-    ]
-
-    # step3a:训练模型
-    yield get_info_str(i18n("step3a:正在训练模型"))
-    click_train(
-        exp_dir1,
-        sr2,
-        if_f0_3,
-        spk_id5,
-        save_epoch10,
-        total_epoch11,
-        batch_size12,
-        if_save_latest13,
-        pretrained_G14,
-        pretrained_D15,
-        gpus16,
-        if_cache_gpu17,
-        if_save_every_weights18,
-        version19,
-    )
-    yield get_info_str(
-        i18n("训练结束, 您可查看控制台训练日志或实验文件夹下的train.log")
-    )
-
-    # step3b:训练索引
-    [get_info_str(_) for _ in train_index(exp_dir1, version19)]
-    yield get_info_str(i18n("全流程结束！"))
-
-
-#                    ckpt_path2.change(change_info_,[ckpt_path2],[sr__,if_f0__])
 def change_info_(ckpt_path):
     if not os.path.exists(ckpt_path.replace(os.path.basename(ckpt_path), "train.log")):
         return {"__type__": "update"}, {"__type__": "update"}, {"__type__": "update"}
