@@ -206,6 +206,7 @@ with gr.Blocks(
                 with gr.Row():      
                     refresh_button = gr.Button("Refresh", variant="primary")
                     but0 = gr.Button(value="Convert", variant="primary")
+            with gr.Row():
                 with gr.Column():
                     with gr.Tabs():
                         with gr.TabItem("Upload"):
