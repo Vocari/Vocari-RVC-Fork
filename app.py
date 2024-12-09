@@ -461,9 +461,7 @@ with gr.Blocks(
                         label="dataset folder:", value="dataset"
                     )
 
-                    but1 = gr.Button("1. Process:", variant="primary")
-                    info1 = gr.Textbox(label="Information:", value="", visible=True)
-
+        
                     gpus6 = gr.Textbox(
                         label="Enter the GPU numbers to use separated by -, (e.g. 0-1-2):",
                         value=gpus,
@@ -482,12 +480,7 @@ with gr.Blocks(
                         interactive=True,
                         visible=False,
                     )
-                    but1.click(
-                        preprocess_dataset,
-                        [dataset_folder, training_name, sr2, np7],
-                        [info1],
-                        api_name="train_preprocess",
-                    )
+                    
                 with gr.Column():
                     f0method8 = gr.Radio(
                         label="F0 extraction method:",
@@ -501,27 +494,14 @@ with gr.Blocks(
                         interactive=True,
                         visible=F0GPUVisible,
                     )
-                    but2 = gr.Button("2. Extract Features:", variant="primary")
-                    info2 = gr.Textbox(label="Information:", value="", max_lines=8)
+                    
+            
                     f0method8.change(
                         fn=change_f0_method,
                         inputs=[f0method8],
                         outputs=[gpus_rmvpe],
                     )
-                    but2.click(
-                        extract_f0_feature,
-                        [
-                            gpus6,
-                            np7,
-                            f0method8,
-                            if_f0_3,
-                            training_name,
-                            version19,
-                            gpus_rmvpe,
-                        ],
-                        [info2],
-                        api_name="train_extract_f0_feature",
-                    )
+                    
                 with gr.Column():
                     total_epoch11 = gr.Slider(
                         minimum=2,
@@ -531,8 +511,11 @@ with gr.Blocks(
                         value=150,
                         interactive=True,
                     )
-                    but4 = gr.Button("3. Train Index", variant="primary")
-                    but3 = gr.Button("4. Train Model", variant="primary")
+                    with gr.Row():
+                        but1 = gr.Button("1. Process:", variant="primary")
+                        but2 = gr.Button("2. Extract Features:", variant="primary")
+                        but4 = gr.Button("3. Train Index", variant="primary")
+                        but3 = gr.Button("4. Train Model", variant="primary")
                     info3 = gr.Textbox(label="Information", value="", max_lines=10)
                     with gr.Accordion(label="General Settings", open=False):
                         gpus16 = gr.Textbox(
@@ -625,10 +608,30 @@ with gr.Blocks(
                             [f0method8, pretrained_G14, pretrained_D15],
                         )
                     with gr.Row():
-                       
+
+
+                        but1.click(
+                            fn=preprocess_dataset,
+                            inputs=[dataset_folder, training_name, sr2, np7],
+                            outputs=[info3],
+                            api_name="train_preprocess",
+                        )
+                        but2.click(
+                            fn=extract_f0_feature,
+                            inputs=[
+                                gpus6,
+                                np7,
+                                f0method8,if_f0_3,
+                                training_name,
+                                version19,
+                                gpus_rmvpe,
+                            ],
+                            outputs=[info3],
+                            api_name="train_extract_f0_feature",
+                        )
                         but3.click(
-                            click_train,
-                            [
+                            fn=click_train,
+                            inputs=[
                                 training_name,
                                 sr2,
                                 if_f0_3,
@@ -644,10 +647,10 @@ with gr.Blocks(
                                 if_save_every_weights18,
                                 version19,
                             ],
-                            info3,
+                            outputs=[info3],
                             api_name="train_start",
                         )
-                        but4.click(train_index, [training_name, version19], info3)
+                        but4.click(fn=train_index, inputs=[training_name, version19], outputs=[info3])
 
     if config.iscolab:
         app.queue()
