@@ -74,7 +74,7 @@ class AudioAPI:
     def load(self):
         input_devices, output_devices, _, _ = self.get_devices()
         try:
-            with open("configs/config.json", "r", encoding="utf-8") as j:
+            with open("rvc/configs/config.json", "r", encoding="utf-8") as j:
                 data = json.load(j)
                 data["rmvpe"] = True  # Ensure rmvpe is the only f0method
                 if data["sg_input_device"] not in input_devices:
@@ -83,7 +83,7 @@ class AudioAPI:
                     data["sg_output_device"] = output_devices[sd.default.device[1]]
         except Exception as e:
             logger.error(f"Failed to load configuration: {e}")
-            with open("configs/config.json", "w", encoding="utf-8") as j:
+            with open("rvc/configs/config.json", "w", encoding="utf-8") as j:
                 data = {
                     "pth_path": " ",
                     "index_path": " ",
