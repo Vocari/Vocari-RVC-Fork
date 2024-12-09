@@ -203,10 +203,10 @@ with gr.Blocks(
                         interactive=True,
                     )
                     vc_transform0 = gr.Number(label="Pitch", value=0)
-                  
-                refresh_button = gr.Button("Refresh", variant="primary")
-                
-                but0 = gr.Button(value="Convert", variant="primary")
+            with gr.Row():
+                with gr.Row():      
+                    refresh_button = gr.Button("Refresh", variant="primary")
+                    but0 = gr.Button(value="Convert", variant="primary")
                 with gr.Column():
                     with gr.Tabs():
                         with gr.TabItem("Upload"):
