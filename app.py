@@ -295,7 +295,7 @@ with gr.Blocks(
                             outputs=[input_audio0],
                         )
 
-                with gr.Column():
+    
                     with gr.Accordion("General Settings", open=False):
                         f0method0 = gr.Radio(
                             label="Method",
