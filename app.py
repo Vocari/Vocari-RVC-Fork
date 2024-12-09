@@ -12,6 +12,37 @@ import huggingface_hub
 import zipfile
 import os
 
+now_dir = os.getcwd()
+sys.path.append(now_dir)
+
+pretraineds_custom_path = os.path.join(
+    now_dir, "rvc", "models", "pretraineds", "pretraineds_custom"
+)
+
+
+
+pretraineds_custom_path_relative = os.path.relpath(pretraineds_custom_path, now_dir)
+
+
+def get_pretrained_list(suffix):
+    return [
+        os.path.join(dirpath, filename)
+        for dirpath, _, filenames in os.walk(pretraineds_custom_path_relative)
+        for filename in filenames
+        if filename.endswith(".pth") and suffix in filename
+    ]
+
+
+pretraineds_list_d = get_pretrained_list("D")
+pretraineds_list_g = get_pretrained_list("G")
+
+
+def refresh_custom_pretraineds():
+    return (
+        {"choices": sorted(get_pretrained_list("G")), "__type__": "update"},
+        {"choices": sorted(get_pretrained_list("D")), "__type__": "update"},
+                          )
+
 
 def show(path, ext, on_error=None):
     try:
@@ -547,24 +578,24 @@ with gr.Blocks(
                             interactive=True,
                         )
                         with gr.Accordion(label="Change pretrains", open=False):
-                            pretrained = lambda sr, letter: [
-                                os.path.abspath(
-                                    os.path.join("assets/pretrained_v2", file)
-                                )
-                                for file in os.listdir("assets/pretrained_v2")
-                                if file.endswith(".pth")
-                                and sr in file
-                                and letter in file
-                            ]
-                            pretrained_G14 = gr.Textbox(
-                                label="pretrained G",
+                            
+                            pretrained_G14 = gr.Dropdown(
+                                label=("Custom Pretrained G"),
+                                info=(
+                                    "Select the custom pretrained model for the generator."
+                                ),
+                                choices=sorted(pretraineds_list_g),
                                 interactive=True,
-                                visible=True,
+                                allow_custom_value=True,
                             )
-                            pretrained_D15 = gr.Textbox(
-                                label="pretrained D",
-                                visible=True,
+                            pretrained_D15 = gr.Dropdown(
+                                label=("Custom Pretrained D"),
+                                info=(
+                                    "Select the custom pretrained model for the generator."
+                                ),
+                                choices=sorted(pretraineds_list_d),
                                 interactive=True,
+                                allow_custom_value=True,
                             )
                     with gr.Row():
                         download_model = gr.Button("5.Download Model")
