@@ -52,7 +52,7 @@ def printt(strr):
 
 
 printt(" ".join(sys.argv))
-model_path = "assets/hubert/hubert_base.pt"
+model_path = "rvc/models/hubert/hubert_base.pt"
 
 printt("exp_dir: " + exp_dir)
 wavPath = "%s/1_16k_wavs" % exp_dir
