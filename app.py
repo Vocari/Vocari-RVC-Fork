@@ -1,4 +1,5 @@
 from original import *
+from applio import Applio
 import shutil, glob
 import os, subprocess
 import gradio as gr
@@ -167,7 +168,7 @@ def upload_model(repo_id, pth, index, token):  # Changed 'repo' to 'repo_id'
 
 with gr.Blocks(
     title="🔊 Vocari's RVC Fork",
-    theme=gr.themes.Base(primary_hue="sky", neutral_hue="zinc"),
+    theme=Applio,
 ) as app:
     with gr.Row():
         gr.Markdown("# Vocari's RVC Fork")
