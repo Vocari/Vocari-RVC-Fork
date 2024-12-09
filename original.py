@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 
 tmp = os.path.join(now_dir, "TEMP")
 shutil.rmtree(tmp, ignore_errors=True)
-shutil.rmtree("%s/runtime/Lib/site-packages/infer_pack" % (now_dir), ignore_errors=True
+shutil.rmtree("%s/runtime/Lib/site-packages/infer_pack" % (now_dir), ignore_errors=True)
 os.makedirs(tmp, exist_ok=True)
 os.environ["TEMP"] = tmp
 warnings.filterwarnings("ignore")
