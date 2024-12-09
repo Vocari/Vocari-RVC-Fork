@@ -193,18 +193,19 @@ with gr.Blocks(
                             else ""
                         ),
                     )
-            with gr.Row():
+                    spk_item = gr.Slider(
+                        minimum=0,
+                        maximum=2333,
+                        step=1,
+                        label="Speaker ID",
+                        value=0,
+                        visible=False,
+                        interactive=True,
+                    )
+                    vc_transform0 = gr.Number(label="Pitch", value=0)
+                  
                 refresh_button = gr.Button("Refresh", variant="primary")
-                spk_item = gr.Slider(
-                    minimum=0,
-                    maximum=2333,
-                    step=1,
-                    label="Speaker ID",
-                    value=0,
-                    visible=False,
-                    interactive=True,
-                )
-                vc_transform0 = gr.Number(label="Pitch", value=0)
+                
                 but0 = gr.Button(value="Convert", variant="primary")
                 with gr.Column():
                     with gr.Tabs():
