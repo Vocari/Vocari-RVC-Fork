@@ -5,7 +5,7 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading
 from pyngrok import ngrok
-from easyfuncs import download_from_url, CachedModels
+from app import download_from_url, CachedModels
 
 # Create necessary directories
 os.makedirs("dataset", exist_ok=True)
