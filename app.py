@@ -647,7 +647,8 @@ with gr.Blocks(
                         )
 
     if config.iscolab:
-        app.queue().launch.(share=True)
+        app.queue()
+        app.launch.(share=True)
     else:
         app.launch(
             server_name="0.0.0.0",
