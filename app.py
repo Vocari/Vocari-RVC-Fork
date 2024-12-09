@@ -556,26 +556,13 @@ with gr.Blocks(
                                 and sr in file
                                 and letter in file
                             ]
-                            pretrained_G14 = gr.Dropdown(
+                            pretrained_G14 = gr.Textbox(
                                 label="pretrained G",
-                                # Get a list of all pretrained G model files in assets/pretrained_v2 that end with .pth
-                                choices=pretrained(sr2.value, "G"),
-                                value=(
-                                    pretrained(sr2.value, "G")[0]
-                                    if len(pretrained(sr2.value, "G")) > 0
-                                    else ""
-                                ),
                                 interactive=True,
                                 visible=True,
                             )
-                            pretrained_D15 = gr.Dropdown(
+                            pretrained_D15 = gr.Textbox(
                                 label="pretrained D",
-                                choices=pretrained(sr2.value, "D"),
-                                value=(
-                                    pretrained(sr2.value, "D")[0]
-                                    if len(pretrained(sr2.value, "G")) > 0
-                                    else ""
-                                ),
                                 visible=True,
                                 interactive=True,
                             )
