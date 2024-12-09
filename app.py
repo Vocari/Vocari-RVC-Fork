@@ -384,12 +384,10 @@ with gr.Blocks(
                     with gr.Row():
                         f0_file = gr.File(label="F0 Path", visible=False)
 
-                with gr.Row():
-                    vc_output2 = gr.Audio(label="Output")
-                with gr.Row():      
-                    vc_output1 = gr.Textbox(
-                        label="Information", placeholder="output here!", visible=True
-                    )
+                    with gr.Row():
+                        vc_output2 = gr.Audio(label="Output")
+                    with gr.Row():      
+                        vc_output1 = gr.Textbox(label="Information", placeholder="output here!", visible=True)
                 but0.click(
                     vc.vc_single,
                     [
