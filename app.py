@@ -193,6 +193,7 @@ with gr.Blocks(
                             else ""
                         ),
                     )
+                with gr.Row():      
                     spk_item = gr.Slider(
                         minimum=0,
                         maximum=2333,
@@ -385,7 +386,7 @@ with gr.Blocks(
 
                 with gr.Row():
                     vc_output2 = gr.Audio(label="Output")
-
+                with gr.Row():      
                     vc_output1 = gr.Textbox(
                         label="Information", placeholder="output here!", visible=True
                     )
