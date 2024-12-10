@@ -5,7 +5,7 @@ import gradio as gr
 now_dir = os.getcwd()
 sys.path.append(now_dir)
 
-from tabs.plugins.installed.UVR.uvr import Separator
+from uvr.uvr import Separator
 
 plugin_folder = os.path.relpath(
     os.path.join(now_dir, "tabs", "plugins", "installed", "UVR")
