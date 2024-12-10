@@ -31,7 +31,7 @@ import threading
 import shutil
 import logging
 
-
+from rvc.infer.modules.vc.modules import VC
 logging.getLogger("numba").setLevel(logging.WARNING)
 logging.getLogger("httpx").setLevel(logging.WARNING)
 
