@@ -8,7 +8,7 @@ sys.path.append(now_dir)
 from uvr.uvr import Separator
 
 plugin_folder = os.path.relpath(
-    os.path.join(now_dir, "tabs", "plugins", "installed", "UVR")
+    os.path.join(now_dir,  "uvr")
 )
 
 
