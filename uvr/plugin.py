@@ -1,7 +1,9 @@
 import os, sys
 import json
 import gradio as gr
-
+import yt_dlp
+from scipy.io.wavfile import write
+from scipy.io.wavfile import read
 now_dir = os.getcwd()
 sys.path.append(now_dir)
 
@@ -42,6 +44,26 @@ def get_models_by_type(type):
         results.append(model_info)
 
     return results
+
+
+def download_audio(url):
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'outtmpl': 'ytdl/%(title)s.%(ext)s',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'wav',
+            'preferredquality': '192',
+        }],
+    }
+
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        info_dict = ydl.extract_info(url, download=True)
+        file_path = ydl.prepare_filename(info_dict).rsplit('.', 1)[0] + '.wav'
+        sample_rate, audio_data = read(file_path)
+        audio_array = np.asarray(audio_data, dtype=np.int16)
+
+        return sample_rate, audio_array
 
 
 def run_uvr(
@@ -151,6 +173,22 @@ def uvr_plugin():
         type="filepath",
         interactive=True,
     )
+    with gr.Accordion("Separation by Link", open = False):
+        with gr.Row():
+            uvr_link = gr.Textbox(
+                label = "Link",
+                placeholder = "Paste the link here",
+                interactive = True
+            )
+        with gr.Row():
+            gr.Markdown("You can paste the link to the video/audio from many sites, check the complete list [here](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)")
+        with gr.Row():
+            uvr_download_button = gr.Button(
+                "Download!",
+                variant = "primary"
+            )
+
+    uvr_download_button.click(download_audio, [uvr_link], [uvr_download_button])
 
     single_stem = gr.Radio(
         label="Single stem",
