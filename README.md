@@ -51,13 +51,6 @@ Before running the web UI, you need the following dependencies:
    The web UI will be accessible at `http://localhost:5000`.
 
 
-## use cli
-
-you can also use cli by
-
-```bash
-python infer_cli.py -h
-```
 
 ## Usage
 
@@ -94,7 +87,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Credits
 
 - Retrieval based Voice Conversion - RVC Project
+
+
 -  IAHispano - Applio
+
+
 - Easygui - Rejekts
 
 
