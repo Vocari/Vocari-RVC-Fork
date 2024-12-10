@@ -110,7 +110,7 @@ if if_gpu_ok and len(gpu_infos) > 0:
     gpu_info = "\n".join(gpu_infos)
     default_batch_size = min(mem) // 2
 else:
-    gpu_info = ("Unfortunately, you do not have a working graphics card to support your training.")
+    gpu_info = "Unfortunately, you do not have a working graphics card to support your training."
     default_batch_size = 1
 gpus = "-".join([i[0] for i in gpu_infos])
 
@@ -333,7 +333,9 @@ def extract_f0_feature(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvp
             sleep(1)
             if done[0]:
                 break
-        with open("%s/rvc/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r") as f:
+        with open(
+            "%s/rvc/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r"
+        ) as f:
             log = f.read()
         logger.info(log)
         yield log
@@ -377,7 +379,9 @@ def extract_f0_feature(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvp
         ),
     ).start()
     while 1:
-        with open("%s/rvc/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r") as f:
+        with open(
+            "%s/rvc/logs/%s/extract_f0_feature.log" % (now_dir, exp_dir), "r"
+        ) as f:
             yield (f.read())
         sleep(1)
         if done[0]:
@@ -538,7 +542,7 @@ def click_train(
     with open("%s/filelist.txt" % exp_dir, "w") as f:
         f.write("\n".join(opt))
     logger.debug("Write filelist done")
-  
+
     logger.info("Use gpus: %s", str(gpus16))
     if pretrained_G14 == "":
         logger.info("No pretrained Generator")
@@ -699,7 +703,6 @@ def train_index(exp_dir1, version19):
         infos.append("Link index to external - %s failed" % (outside_index_root))
 
     yield "\n".join(infos)
-
 
 
 def change_info_(ckpt_path):

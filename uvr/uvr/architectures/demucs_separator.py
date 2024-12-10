@@ -4,9 +4,14 @@ from pathlib import Path
 import torch
 import numpy as np
 from tabs.plugins.installed.UVR.uvr.common_separator import CommonSeparator
-from tabs.plugins.installed.UVR.uvr.uvr_lib_v5.demucs.apply import apply_model, demucs_segments
+from tabs.plugins.installed.UVR.uvr.uvr_lib_v5.demucs.apply import (
+    apply_model,
+    demucs_segments,
+)
 from tabs.plugins.installed.UVR.uvr.uvr_lib_v5.demucs.hdemucs import HDemucs
-from tabs.plugins.installed.UVR.uvr.uvr_lib_v5.demucs.pretrained import get_model as get_demucs_model
+from tabs.plugins.installed.UVR.uvr.uvr_lib_v5.demucs.pretrained import (
+    get_model as get_demucs_model,
+)
 from tabs.plugins.installed.UVR.uvr.uvr_lib_v5 import spec_utils
 
 DEMUCS_4_SOURCE = ["drums", "bass", "other", "vocals"]
