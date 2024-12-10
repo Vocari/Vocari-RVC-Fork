@@ -14,6 +14,7 @@ import zipfile
 import os
 from rvc.infer.modules.vc.modules import VC
 from uvr.plugin import uvr_plugin
+
 now_dir = os.getcwd()
 sys.path.append(now_dir)
 
