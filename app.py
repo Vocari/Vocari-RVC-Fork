@@ -1,4 +1,4 @@
-from original import *
+from train import *
 from applio import Applio
 import shutil, glob
 import os, subprocess
@@ -12,6 +12,7 @@ from pydub import AudioSegment
 import huggingface_hub
 import zipfile
 import os
+from rvc.infer.modules.vc.modules import VC
 
 now_dir = os.getcwd()
 sys.path.append(now_dir)
