@@ -430,8 +430,7 @@ with gr.Blocks(
             download_md.click(
                 fn=download_from_url, inputs=[url, model_name], outputs=model_name
             )
-        with gr.TabItem("UVR"):
-            uvr_plugin()
+    
         with gr.TabItem("Training"):
             with gr.Row():
                 with gr.Column():
@@ -521,7 +520,7 @@ with gr.Blocks(
                         value=150,
                         interactive=True,
                     )
-
+                 with gr.Column():
                     with gr.Accordion(label="General Settings", open=False):
                         gpus16 = gr.Textbox(
                             label="GPUs separated by -, (e.g. 0-1-2)",
@@ -584,24 +583,14 @@ with gr.Blocks(
                                 interactive=True,
                                 allow_custom_value=True,
                             )
+                    
+
                     with gr.Row():
                         but1 = gr.Button("1. Process:", variant="primary")
                         but2 = gr.Button("2. Extract Features:", variant="primary")
                         but4 = gr.Button("3. Train Index", variant="primary")
                         but3 = gr.Button("4. Train Model", variant="primary")
                     info3 = gr.Textbox(label="Information", value="", max_lines=10)
-                    with gr.Row():
-                        download_model = gr.Button("5.Download Model")
-                    with gr.Row():
-                        model_files = gr.Files(
-                            label="Your Model and Index file can be downloaded here:"
-                        )
-                        download_model.click(
-                            fn=lambda name: os.listdir(f"assets/weights/{name}")
-                            + glob.glob(f'logs/{name.split(".")[0]}/added_*.index'),
-                            inputs=[training_name],
-                            outputs=[model_files, info3],
-                        )
                     with gr.Row():
                         sr2.change(
                             change_sr2,
