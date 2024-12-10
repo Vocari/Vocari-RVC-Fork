@@ -17,7 +17,7 @@ from rvc.infer.modules.infer_libs.models import (
     SynthesizerTrnMs768NSFsid,
     SynthesizerTrnMs768NSFsid_nono,
 )
-from rvc.infer.modules.pipeline import Pipeline
+from rvc.infer.modules.vc.pipeline import Pipeline
 import time
 import glob
 from shutil import move
