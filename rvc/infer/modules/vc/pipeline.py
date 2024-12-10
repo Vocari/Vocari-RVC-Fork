@@ -29,8 +29,8 @@ input_audio_path2wav = {}
 import torchcrepe  # Fork Feature. Crepe algo for training and preprocess
 from torchfcpe import spawn_bundled_infer_model
 import torch
-from lib.infer_libs.rmvpe import RMVPE
-from lib.infer_libs.fcpe import FCPE
+from rvc.infer.infer_libs.rmvpe import RMVPE
+from rvc.infer.infer_libs.fcpe import FCPE
 
 @lru_cache
 def cache_harvest_f0(input_audio_path, fs, f0max, f0min, frame_period):
@@ -220,7 +220,7 @@ class Pipeline(object):
 
     def get_pitch_dependant_rmvpe(self, x, f0_min=1, f0_max=40000, *args, **kwargs):
         if not hasattr(self, "model_rmvpe"):
-            from lib.infer.infer_libs.rmvpe import RMVPE
+            from rvc.infer.infer_libs.rmvpe import RMVPE
             
             logger.info(
                 f"Loading rmvpe model, {os.environ['rmvpe_model_path']}"
@@ -445,7 +445,7 @@ class Pipeline(object):
             )
         elif f0_method == "rmvpe":
             if not hasattr(self, "model_rmvpe"):
-                from lib.infer.infer_libs.rmvpe import RMVPE
+                from rvc.infer.infer_libs.rmvpe import RMVPE
 
                 logger.info(
                     f"Loading rmvpe model, {os.environ['rmvpe_model_path']}"
