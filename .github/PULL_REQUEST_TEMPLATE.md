@@ -16,11 +16,4 @@
 
 - Bug fix / new feature / synthesis quality improvement / program execution speed improvement
 
-# Description
 
-- Describe what this pull request is for.
-- What will it affect.
-
-# Screenshot
-
-- Please include a screenshot if applicable
