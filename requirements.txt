@@ -6,7 +6,6 @@ requests>=2.31.0,<2.32.0
 tqdm
 gradio>=4.31.0,<5.0.0
 wget
-audio_separator[gpu]==0.24.1
 python-dotenv
 pyworld
 fairseq
@@ -45,3 +44,4 @@ beautifulsoup4
 flask
 mega.py
 gdown==4.6.0
+audio_separator[gpu]==0.24.1
