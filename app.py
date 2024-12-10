@@ -520,7 +520,7 @@ with gr.Blocks(
                         value=150,
                         interactive=True,
                     )
-                 with gr.Column():
+                with gr.Column():
                     with gr.Accordion(label="General Settings", open=False):
                         gpus16 = gr.Textbox(
                             label="GPUs separated by -, (e.g. 0-1-2)",
