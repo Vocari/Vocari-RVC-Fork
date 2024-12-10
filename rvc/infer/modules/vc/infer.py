@@ -3,8 +3,8 @@ import shutil
 import gc
 import torch
 from multiprocessing import cpu_count
-from rvc.infer.modules.modules import VC
-from rvc.infer.modules.split_audio import split_silence_nonsilent, adjust_audio_lengths, combine_silence_nonsilent
+from rvc.infer.modules.vc.modules import VC
+from rvc.infer.modules.vc.split_audio import split_silence_nonsilent, adjust_audio_lengths, combine_silence_nonsilent
 
 class Configs:
     def __init__(self, device, is_half):
