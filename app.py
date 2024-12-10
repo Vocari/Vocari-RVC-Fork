@@ -13,7 +13,7 @@ import huggingface_hub
 import zipfile
 import os
 from rvc.infer.modules.vc.modules import VC
-
+from uvr.plugin import uvr_plugin
 now_dir = os.getcwd()
 sys.path.append(now_dir)
 
@@ -430,6 +430,8 @@ with gr.Blocks(
             download_md.click(
                 fn=download_from_url, inputs=[url, model_name], outputs=model_name
             )
+        with gr.TabItem("UVR"):
+            uvr_plugin()
         with gr.TabItem("Training"):
             with gr.Row():
                 with gr.Column():
