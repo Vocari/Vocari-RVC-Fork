@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 now_dir = os.getcwd()
 sys.path.append(now_dir)
 load_dotenv()
-from rvc.infer.modules.vc.modules import VC
+
 from rvc.infer.lib.train.process_ckpt import (
     change_info,
     extract_small_model,
