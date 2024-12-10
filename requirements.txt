@@ -1,4 +1,3 @@
-
 pip>=23.3; sys_platform == 'darwin'
 wheel; sys_platform == 'darwin'
 PyYAML; sys_platform == 'darwin'
@@ -11,7 +10,7 @@ python-dotenv
 pyworld
 fairseq
 yt_dlp
-pytube 
+pytube
 pydub
 ffmpeg-python>=0.2.0
 faiss-cpu==1.7.3
@@ -19,8 +18,8 @@ soundfile==0.12.1
 noisereduce
 pedalboard
 stftpitchshift
-omegaconf>=2.0.6; sys_platform == 'darwin' 
-numba; sys_platform == 'linux'
+omegaconf>=2.0.6; sys_platform == 'darwin'
+numba>=0.57.0; sys_platform == 'linux'
 numba==0.57.0; sys_platform == 'darwin' or sys_platform == 'win32'
 torch==2.3.1
 torchaudio==2.3.1
@@ -37,13 +36,12 @@ tensorboard
 gradio==4.49.0
 tk
 pyngrok
-certifi>=2023.07.22; sys_platform == 'darwin'  
+certifi>=2023.7.22; sys_platform == 'darwin'
 antlr4-python3-runtime==4.8; sys_platform == 'darwin'
 tensorboardX
 edge-tts==6.1.9
 pypresence
 beautifulsoup4
 flask
-mega.py 
+mega.py
 gdown==4.6.0
-
