@@ -4,6 +4,7 @@ import gradio as gr
 import yt_dlp
 from scipy.io.wavfile import write
 from scipy.io.wavfile import read
+import numpy as np
 now_dir = os.getcwd()
 sys.path.append(now_dir)
 
@@ -188,7 +189,7 @@ def uvr_plugin():
                 variant = "primary"
             )
 
-    uvr_download_button.click(download_audio, [uvr_link], [uvr_download_button])
+    uvr_download_button.click(download_audio, [uvr_link], [audio])
 
     single_stem = gr.Radio(
         label="Single stem",
