@@ -7,7 +7,7 @@ from torch.nn.utils import remove_weight_norm, weight_norm
 
 from rvc.infer.modules.infer_libs import commons
 from rvc.infer.modules.infer_libs.commons import get_padding, init_weights
-from rvc.infer.modulesinfer_libs.transforms import piecewise_rational_quadratic_transform
+from rvc.infer.modules.infer_libs.transforms import piecewise_rational_quadratic_transform
 
 LRELU_SLOPE = 0.1
 
