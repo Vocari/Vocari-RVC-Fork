@@ -144,7 +144,7 @@ def run_uvr(
         return os.path.join(output_dir, files)
 
 
-def applio_plugin():
+def uvr_plugin():
     audio = gr.Audio(
         label="Input audio",
         sources=["upload", "microphone"],
