@@ -135,6 +135,27 @@ def download_from_url(url=None, model=None):
         return "Done"
 
 
+
+# Create a folder for the dataset if it doesn't exist
+dataset_folder = "dataset"
+os.makedirs(dataset_folder, exist_ok=True)
+
+def save_audio_auto(audio):
+    """Automatically save recorded audio to the dataset folder with a unique name."""
+    if audio is None:
+        return "No audio recorded."
+    
+    # Generate a unique filename using a timestamp
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    file_path = os.path.join(dataset_folder, f"audio_{timestamp}.wav")
+    
+    # Save the audio file
+    with open(file_path, "wb") as f:
+        f.write(audio)
+    return f"Audio saved to {file_path}"
+
+
+
 def upload_model(repo_id, pth, index, token):  # Changed 'repo' to 'repo_id'
     """
     Upload a model to the Hugging Face Hub
@@ -471,6 +492,12 @@ with gr.Blocks(
                         label="dataset folder:", value="dataset"
                     )
 
+                    with gr.Row():
+                        audio_input = gr.Audio(
+                            source="microphone", type="bytes", label="Record Audio (Auto Save)"
+                        )
+                    output_message = gr.Textbox(label="Output")
+
                     gpus6 = gr.Textbox(
                         label="Enter the GPU numbers to use separated by -, (e.g. 0-1-2):",
                         value=gpus,
@@ -479,6 +506,12 @@ with gr.Blocks(
                     )
                     gpu_info9 = gr.Textbox(
                         label="GPU Info", value=gpu_info, visible=F0GPUVisible
+                    )
+
+                    audio_input.change(
+                        fn=save_audio_auto,
+                        inputs=audio_input,
+                        outputs=output_message
                     )
                     spk_id5 = gr.Slider(
                         minimum=0,
