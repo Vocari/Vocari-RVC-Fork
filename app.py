@@ -640,9 +640,7 @@ with gr.Blocks(
                             change_f0,
                             [if_f0_3, sr2, version19],
                             [f0method8, pretrained_G14, pretrained_D15],
-                        )
-                    with gr.Row():
-
+                        )                    
                         but1.click(
                             fn=preprocess_dataset,
                             inputs=[dataset_folder, training_name, sr2, np7],
