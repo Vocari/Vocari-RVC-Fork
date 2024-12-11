@@ -494,7 +494,7 @@ with gr.Blocks(
 
                     with gr.Row():
                         audio_input = gr.Audio(
-                            source="microphone", type="bytes", label="Record Audio (Auto Save)"
+                            type="bytes", label="Upload Audio (Auto Save)"
                         )
                     output_message = gr.Textbox(label="Output")
 
