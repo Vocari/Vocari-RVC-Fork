@@ -325,6 +325,8 @@ with gr.Blocks(
                                 [
                                     "pm",
                                     "harvest",
+                                    "dio",
+                                    "mangio-crepe",
                                     "crepe",
                                     "rmvpe",
                                     "fcpe",
@@ -494,7 +496,7 @@ with gr.Blocks(
 
                     with gr.Row():
                         audio_input = gr.Audio(
-                            type="bytes", label="Upload Audio (Auto Save)"
+                            type="filepath", label="Upload Audio (Auto Save)"
                         )
                     output_message = gr.Textbox(label="Output")
 
