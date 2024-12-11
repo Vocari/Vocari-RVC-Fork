@@ -3,6 +3,7 @@ wheel; sys_platform == 'darwin'
 PyYAML; sys_platform == 'darwin'
 requests>=2.31.0,<2.32.0
 tqdm
+aria2
 
 gradio>=4.31.0,<5.0.0
 wget
